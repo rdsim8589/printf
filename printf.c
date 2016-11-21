@@ -1,4 +1,5 @@
 #include "holberton.h"
+#include <stdio.h>
 /**
  * _printf - Recreate stdio's printf
  * @format: Formatted string to print to stdout
@@ -15,16 +16,19 @@ int _printf(const char *format, ...)
 	b_r.bp = 0;
 	b_r.size = 1024;
 	b_r.buf = malloc(b_r.size);
+	b_r.printed = 0;
+	va_start(b_r.ap, format);
 
 	/* Main loop to create buffer from format string */
 	while (b_r.format[b_r.fp] != '\0')
 	{
 		_copy(&b_r);
-		/* call parse */
+		_parse(&b_r);
 	}
 
 	_write(&b_r);
 
+	va_end(b_r.ap);
 	return (b_r.printed);
 }
 /**
@@ -44,15 +48,17 @@ void _parse(buffer *b_r)
 {
 	tags t;
 
-	if (b_r->format[b_r->fp] != '%' || b_r->format[b_r->fp] != '\0')
+	if (b_r->format[b_r->fp] != '%' && b_r->format[b_r->fp] != '\0')
 		write(1, "Parsed not at percent or null\n", 30);
-	else if (b_r->format[b_r->fp] == '%')
-		b_r->buf[b_r->bp++] = b_r->format[b_r->fp++];
+	if (b_r->format[b_r->fp] == '%')
+		b_r->fp++;
 
 	_create_tag(b_r, &t);
 
 	/* t now should be full of data.
 		Need to match the spec in t to the spec function and call */
+	if (t.spec == 'c')
+		_spec_c(b_r, &t);
 }
 /**
  * _create_tag - Initialize and parse, creating a valid tag
@@ -80,7 +86,14 @@ void _create_tag(buffer *b_r, tags *t)
       t->flags[0] = '\0', t->flags[1] = '\0', t->flags[2] = '\0';
       t->flags[3] = '\0', t->flags[4] = '\0';
 
+      printf("----Before parse_tag\n");
+      printf("The current buffer point is %d, and the current buffer is %s\n", b_r->bp, b_r->buf);
+      printf("The current format point is %d\n", b_r->fp);
 	_parse_tag(table, t, b_r);
+      printf("----After parse_tag\n");
+      printf("The current buffer point is %d, and the current buffer is %s\n", b_r->bp, b_r->buf);
+      printf("The current format point is %d\n", b_r->fp);
+	printf("the specifier found was %c\n", t->spec);
 }
 /**
  * _init_tag(parse_table *table, tags *t)
@@ -89,9 +102,10 @@ void _create_tag(buffer *b_r, tags *t)
  */
 void _parse_tag(parse_table *table, tags *t, buffer *b_r)
 {
-	int currentLevel, i, j, tmp; tmp = currentLevel = i = j = 0;
+	int currentLevel, i, j, tmp, found; tmp = currentLevel = i = j = found = 0;
 	while (table[i].level >= currentLevel && currentLevel < 5)
 	{
+		printf("c = %c, level = %d, under format: %c\n", table[i].c, table[i].level, b_r->format[b_r->fp]);
 		if (table[i].c == b_r->format[b_r->fp] || table[i].c == 'N')
 		{
 			currentLevel = table[i].level;
@@ -101,15 +115,15 @@ void _parse_tag(parse_table *table, tags *t, buffer *b_r)
 				t->spec = table[i].c, b_r->fp++;
 				break;
 			case 4:
-				t->length[0] = table[i].c, b_r->fp++;
+				t->length[0] = table[i].c, b_r->fp++, i = 0;
 				break;
 			case 3:
-				b_r->fp++, tmp = t->prec = __atoi(b_r->format, b_r->fp);
+				b_r->fp++, tmp = t->prec = __atoi(b_r->format, b_r->fp), i = 0;
 				while (tmp)
 					tmp /= 10, b_r->fp++;
 				break;
 			case 2:
-				tmp = t->width = __atoi(b_r->format, b_r->fp);
+				tmp = t->width = __atoi(b_r->format, b_r->fp), i = 0;
 				while (tmp)
 					tmp /= 10, b_r->fp++;
 				break;
@@ -123,7 +137,7 @@ void _parse_tag(parse_table *table, tags *t, buffer *b_r)
 						t->flags[j++] = table[i].c;
 						break;
 					}
-				b_r->fp++;
+				b_r->fp++, i = 0;
 				break;
 			}
 		}
