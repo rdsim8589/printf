@@ -52,5 +52,5 @@ void _copy(buffer *);
 int _printf(const char *format, ...);
 void _parse(buffer *b_r);
 void _create_tag(buffer *b_r, tags *t);
-int __atoi(char *s, int n);
+int __atoi(const char *s, int n);
 #endif
