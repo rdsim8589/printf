@@ -70,7 +70,7 @@ void _create_tag(buffer *b_r, tags *t)
 	/*{'0', 0, 2},*/ {'1', 0, 2}, {'2', 0, 2}, {'3', 0, 2}, {'4', 0, 2},
 	{'5', 0, 2}, {'6', 0, 2}, {'7', 0, 2}, {'8', 0, 2}, {'9', 0, 2},
 	{'-', 0, 1}, {'+', 0, 1}, {' ', 0, 1}, {'#', 0, 1}, {'0', 0, 1},
-	/* We found nothing */ {NULL, 0, -1}
+	/* We found nothing */ {'N', 0, -1}
 	};
 		/* Initialize tag to null */
 	t->spec = '\0';
@@ -80,21 +80,23 @@ void _create_tag(buffer *b_r, tags *t)
 	t->flags[3] = '\0', t->flags[4] = '\0';
 
 	currentLevel = 0;
-	while (table[i].level >= currentLevel || currentLevel < 5)
+	while (table[i].level >= currentLevel && currentLevel < 5)
 	{
-		if (table[i].c == b_r->format[b_r->fp] || table[i].c == NULL)
+		if (table[i].c == b_r->format[b_r->fp] || table[i].c == 'N')
 		{
 			currentLevel = table[i].level;
 			/* switch based on index */
 			switch(table[i].level) {
 			case 5:
 				t->spec = table[i].c;
-				b_r->fp++, break;
+				b_r->fp++;
+				break;
 			case 4:
 				if (t->length[0] != '\0')
 					t->length[1] = table[i].c;
 				t->length[0] = table[i].c;
-				b_r->fp++, break;
+				b_r->fp++;
+				break;
 			case 3:
 				b_r->fp++;
 				tmp = t->prec = __atoi(b_r->format, b_r->fp);
@@ -110,6 +112,7 @@ void _create_tag(buffer *b_r, tags *t)
 				j = 0;
 				while (1)
 				{
+				/* Add checking for repeat flags */
 					if (t->flags[j] = '\0')
 					{
 						t->flags[j] = table[i].c;
@@ -117,9 +120,10 @@ void _create_tag(buffer *b_r, tags *t)
 					}
 					j++;
 				}
-				b_r->fp++, break;
+				b_r->fp++;
+				break;
 			}
 		}
-		i++;	
+		i++;
 	}
-}		
+}
