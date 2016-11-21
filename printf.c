@@ -22,7 +22,9 @@ int _printf(const char *format, ...)
 	/* Main loop to create buffer from format string */
 	while (b_r.format[b_r.fp] != '\0')
 	{
+		printf("--start loop--\n");
 		_copy(&b_r);
+		printf("--start parse--\n");
 		_parse(&b_r);
 	}
 
@@ -86,14 +88,7 @@ void _create_tag(buffer *b_r, tags *t)
       t->flags[0] = '\0', t->flags[1] = '\0', t->flags[2] = '\0';
       t->flags[3] = '\0', t->flags[4] = '\0';
 
-      printf("----Before parse_tag\n");
-      printf("The current buffer point is %d, and the current buffer is %s\n", b_r->bp, b_r->buf);
-      printf("The current format point is %d\n", b_r->fp);
 	_parse_tag(table, t, b_r);
-      printf("----After parse_tag\n");
-      printf("The current buffer point is %d, and the current buffer is %s\n", b_r->bp, b_r->buf);
-      printf("The current format point is %d\n", b_r->fp);
-	printf("the specifier found was %c\n", t->spec);
 }
 /**
  * _init_tag(parse_table *table, tags *t)
@@ -103,9 +98,9 @@ void _create_tag(buffer *b_r, tags *t)
 void _parse_tag(parse_table *table, tags *t, buffer *b_r)
 {
 	int currentLevel, i, j, tmp, found; tmp = currentLevel = i = j = found = 0;
+
 	while (table[i].level >= currentLevel && currentLevel < 5)
 	{
-		printf("c = %c, level = %d, under format: %c\n", table[i].c, table[i].level, b_r->format[b_r->fp]);
 		if (table[i].c == b_r->format[b_r->fp] || table[i].c == 'N')
 		{
 			currentLevel = table[i].level;
@@ -130,8 +125,8 @@ void _parse_tag(parse_table *table, tags *t, buffer *b_r)
 			case 1:
 				j = 0;
 				while (1)
-					if (t->flags[j++] == table[i].c)
-						;
+					if (t->flags[j] == table[i].c)
+						break;
 					else if (t->flags[j] == '\0')
 					{
 						t->flags[j++] = table[i].c;
