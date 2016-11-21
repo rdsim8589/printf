@@ -36,6 +36,18 @@ typedef struct tags
 	int width;
 	char flags[4];
 } tags;
+/**
+ * struct parse_table - Table used for parsing the %s
+ * @c: character found
+ * @number: number for width and precision
+ * @level: which level from 5 (specification) to 1 (flags)
+ */
+typedef struct parse_table
+{
+	char c;
+	int number;
+	int level;
+} parse_table;
 void _copy(buffer *);
 int _printf(const char *format, ...);
 void _parse(buffer *b_r);
