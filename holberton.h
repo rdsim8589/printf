@@ -55,4 +55,5 @@ void _parse(buffer *b_r);
 void _create_tag(buffer *b_r, tags *t);
 int __atoi(const char *s, int n);
 void _write(buffer *b_r);
+void _parse_tag(parse_table *table, tags *t, buffer *b_r);
 #endif
