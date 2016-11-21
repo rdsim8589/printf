@@ -23,9 +23,9 @@ int _printf(const char *format, ...)
 		/* call parse */
 	}
 
-	write(1, b_r.buf, b_r.bp);
+	_write(&b_r);
 
-	return (b_r.bp);
+	return (b_r.printed);
 }
 /**
  * _copy - directly copy from format to buffer
@@ -126,4 +126,14 @@ void _create_tag(buffer *b_r, tags *t)
 		}
 		i++;
 	}
+}
+/**
+ * _write - write the buffer and add to the printed char count, and reset.
+ * @b_r: buffer to write
+ */
+void _write(buffer *b_r)
+{
+	write(1, b_r->buf, b_r->bp);
+	b_r->printed += b_r->bp;
+	b_r->bp = 0;
 }

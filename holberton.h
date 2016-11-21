@@ -19,6 +19,7 @@ typedef struct buffer
 	int bp;
 	int fp;
 	unsigned int size;
+	unsigned int printed;
 } buffer;
 /**
  * struct tags - Format tags after %
@@ -53,4 +54,5 @@ int _printf(const char *format, ...);
 void _parse(buffer *b_r);
 void _create_tag(buffer *b_r, tags *t);
 int __atoi(const char *s, int n);
+void _write(buffer *b_r);
 #endif
