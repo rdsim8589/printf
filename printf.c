@@ -100,25 +100,25 @@ void _parse_tag(parse_table *table, tags *t, buffer *b_r)
 	int currentLevel, i, j, tmp, found; tmp = currentLevel = i = j = found = 0;
 
 	while (table[i].level >= currentLevel && currentLevel < 5)
-	{
+	{	
 		if (table[i].c == b_r->format[b_r->fp] || table[i].c == 'N')
 		{
 			currentLevel = table[i].level;
 			switch (table[i].level)
 			{
-			case 5:
+			case 5:     
 				t->spec = table[i].c, b_r->fp++;
 				break;
 			case 4:
-				t->length[0] = table[i].c, b_r->fp++, i = 0;
+				t->length[0] = table[i].c, b_r->fp++, i = -1;
 				break;
 			case 3:
-				b_r->fp++, tmp = t->prec = __atoi(b_r->format, b_r->fp), i = 0;
+				b_r->fp++, tmp = t->prec = __atoi(b_r->format, b_r->fp), i = -1;
 				while (tmp)
 					tmp /= 10, b_r->fp++;
 				break;
 			case 2:
-				tmp = t->width = __atoi(b_r->format, b_r->fp), i = 0;
+				tmp = t->width = __atoi(b_r->format, b_r->fp), i = -1;
 				while (tmp)
 					tmp /= 10, b_r->fp++;
 				break;
@@ -132,7 +132,7 @@ void _parse_tag(parse_table *table, tags *t, buffer *b_r)
 						t->flags[j++] = table[i].c;
 						break;
 					}
-				b_r->fp++, i = 0;
+				b_r->fp++, i = -1;
 				break;
 			}
 		}
