@@ -16,6 +16,7 @@ int _printf(const char *format, ...)
 	b_r.size = 1024;
 	b_r.buf = malloc(b_r.size);
 
+	/* Main loop to create buffer from format string */
 	while (b_r.format[b_r.fp] != '\0')
 	{
 		_copy(&b_r);
