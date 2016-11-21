@@ -112,7 +112,11 @@ void _create_tag(buffer *b_r, tags *t)
 				j = 0;
 				while (1)
 				{
-				/* Add checking for repeat flags */
+					if (t->flags[j] = table[i].c)
+					{
+						j++;
+						break;
+					}
 					if (t->flags[j] = '\0')
 					{
 						t->flags[j] = table[i].c;
