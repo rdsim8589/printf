@@ -67,9 +67,16 @@ void _write(buffer *b_r);
 void _parse_tag(buffer *b_r, tags *t, parse_table *table);
 int str_len(char *str);
 void _revstr(char *s);
-char *int_to_str(int n);
-/* hexcalc functions */
-char *_litoh(long int x);
+/* to string functions */
+char *_int_to_str(long int n);
+char *_int_to_hexstr(long int n);
+char *_int_to_octstr(long int n);
+char *_int_to_binstr(long int n);
+/* unsigned to string functions */
+char *_uint_to_str(unsigned long int n);
+char *_uint_to_hexstr(unsigned long int n);
+char *_uint_to_octstr(unsigned long int n);
+char *_uint_to_binstr(unsigned long int n);
 /* printf_flag_helper functions */
 int _isFlagMinus(tags *t);
 int _isFlagPlus(tags *t);
