@@ -1,16 +1,16 @@
 #include "holberton.h"
 #include <stdio.h>
 /**
- * int_to_str - convert an int into it's absolute value string
+ * _int_to_str - convert an int into it's absolute value string
  * @n: number to convert
  */
-char *int_to_str(int n)
+char *_int_to_str(long int n)
 {
 	char *s;
-	int tmp, i;
+	int i;
 
-	tmp = i = 0;
-	s = malloc(11 * sizeof(char));
+	i = 0;
+	s = malloc(21 * sizeof(char));
    
 	if (n == 0)
 		s[i] = '0';
@@ -20,6 +20,33 @@ char *int_to_str(int n)
 		s[i] = n % 10 + '0';
 		n /= 10;
 		i++;
+	}
+	s[i] = '\0';
+	_revstr(s);
+	return (s);
+}
+/**
+ * _int_to_hexstr - convert a long int into a hex string
+ * @n: int to convert to hex
+ */
+char *_int_to_hexstr(long int n)
+{
+	char *s;
+	int tmp, i;
+
+	i = 0;
+	s = malloc(21 * sizeof(char));
+	
+	while (n != 0)
+	{
+		tmp = n % 16;
+		/* convert int to char */
+		if (tmp < 10)
+			tmp += '0';
+		else
+			tmp += 'a' - 10;
+		s[i++] = tmp;
+		n /= 16;
 	}
 	s[i] = '\0';
 	_revstr(s);
