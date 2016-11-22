@@ -13,8 +13,8 @@ void _spec_s(buffer *b_r, tags *t)
 	/* get arg from va_arg and store */
 	hold = va_arg(b_r->ap, char *);
 	minus = i = 0;
-	/*check the percision tag*/
-	printf("t->spec: %c\n", t->spec);
+	/*check the precision tag*/
+	printf("t->prec: %d\n", t->prec);
 	hold_len = str_len(hold);
 	/* if width if found */
 	if (t->width > hold_len)

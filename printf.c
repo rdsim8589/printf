@@ -84,11 +84,12 @@ void _create_tag(buffer *b_r, tags *t)
       };
 
       /* Initialize tag to null */
-      t->spec = '\0';
-      t->length[0] = '\0', t->length[1] = '\0';
-      t->prec = -1, t->width = -1;
-      t->flags[0] = '\0', t->flags[1] = '\0', t->flags[2] = '\0';
-      t->flags[3] = '\0', t->flags[4] = '\0';
+	t->spec = '\0';
+	t->length = '\0';
+	t->prec = -1;
+	t->width = -1;
+	t->flags[0] = '\0', t->flags[1] = '\0', t->flags[2] = '\0';
+	t->flags[3] = '\0', t->flags[4] = '\0';
 
 	_parse_tag(table, t, b_r);
 }
@@ -102,47 +103,36 @@ void _parse_tag(parse_table *table, tags *t, buffer *b_r)
 	int currentLevel, i, j, tmp, found; tmp = currentLevel = i = j = found = 0;
 
 	while (table[i].level >= currentLevel && currentLevel < 5)
-	{	
+	{
 		if (table[i].c == b_r->format[b_r->fp] || table[i].c == 'N')
 		{
 			currentLevel = table[i].level;
 			switch (table[i].level)
 			{
 			case 5:     
-				t->spec = table[i].c, b_r->fp++;
+				_found_spec(b_r, t, table, i);
 				break;
 			case 4:
-				t->length[0] = table[i].c, b_r->fp++, i = -1;
+				_found_length(b_r, t, table, i);
+				i = -1;
 				break;
 			case 3:
-				b_r->fp++, tmp = t->prec = __atoi(b_r->format, b_r->fp), i = -1;
-				while (tmp)
-					tmp /= 10, b_r->fp++;
+				_found_prec(b_r, t);
+				i = -1;
 				break;
 			case 2:
-				tmp = t->width = __atoi(b_r->format, b_r->fp), i = -1;
-				while (tmp)
-					tmp /= 10, b_r->fp++;
+				_found_width(b_r, t);
+				i = -1;
 				break;
 			case 1:
-				j = 0;
-				while (1)
-					if (t->flags[j] == table[i].c)
-						break;
-					else if (t->flags[j] == '\0')
-					{
-						t->flags[j++] = table[i].c;
-						break;
-					}
-				b_r->fp++, i = -1;
+				_found_flag(b_r, t, table, i);
+				i = -1;
 				break;
 			}
 		}
 		i++;
 	}
 }
-
-
 
 
 

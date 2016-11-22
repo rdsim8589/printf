@@ -32,7 +32,7 @@ typedef struct buffer
 typedef struct tags
 {
 	char spec;
-	char length[2];
+	char length;
 	int prec;
 	int width;
 	char flags[4];
@@ -65,4 +65,10 @@ int _isFlagPlus(tags *t);
 int _isFlagSpace(tags *t);
 int _isFlagHashtag(tags *t);
 int _isFlagZero(tags *t);
+/* parse helper functions */
+void _found_spec(buffer *b_r, tags *t, parse_table *table, int i);
+void _found_length(buffer *b_r, tags *t, parse_table *table, int i);
+void _found_prec(buffer *b_r, tags *t);
+void _found_width(buffer *b_r, tags *t);
+void _found_flag(buffer *b_r, tags *t, parse_table *table, int i);
 #endif
