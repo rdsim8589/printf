@@ -48,8 +48,8 @@ typedef struct tags
 typedef struct parse_table
 {
 	char c;
-	int number;
 	int level;
+	void (*f)();
 } parse_table;
 void _copy(buffer *);
 int _printf(const char *format, ...);
@@ -71,7 +71,7 @@ int _isFlagZero(tags *t);
 /* parse helper functions */
 void _found_spec(buffer *b_r, tags *t, parse_table *table, int i);
 void _found_length(buffer *b_r, tags *t, parse_table *table, int i);
-void _found_prec(buffer *b_r, tags *t);
+void _found_prec(buffer *b_r, tags *t, parse_table *table, int i);
 void _found_width(buffer *b_r, tags *t);
 void _found_flag(buffer *b_r, tags *t, parse_table *table, int i);
 #endif

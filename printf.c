@@ -52,14 +52,11 @@ void _parse(buffer *b_r)
 
 	if (b_r->format[b_r->fp] != '%' && b_r->format[b_r->fp] != '\0')
 		write(1, "Parsed not at percent or null\n", 30);
+	if (b_r->format[b_r->fp] == '%')
+		b_r->fp++;
 
 	_create_tag(b_r, &t);
 
-	if (b_r->format[b_r->fp] == '%')
-	{
-		t.scanned[t.scan_i++] = '%';
-		b_r->fp++;
-	}
 	/* t now should be full of data.
 		Need to match the spec in t to the spec function and call */
 	printf("t.spec = %c\n", t.spec);
@@ -80,18 +77,22 @@ void _parse(buffer *b_r)
 void _create_tag(buffer *b_r, tags *t)
 {
 	int i, j, currentLevel, tmp;
-      parse_table table[] = {
-      {'d', 0, 5}, {'i', 0, 5}, {'c', 0, 5}, {'s', 0, 5}, {'u', 0, 5},
-      {'o', 0, 5}, {'x', 0, 5}, {'X', 0, 5}, {'b', 0, 5}, {'S', 0, 5},
-      {'p', 0, 5}, {'R', 0, 5}, {'r', 0, 5}, {'%', 0, 5},
-      {'h', 0, 4}, {'l', 0, 4}, {'.', 0, 3},
-      {'1', 0, 2}, {'2', 0, 2}, {'3', 0, 2}, {'4', 0, 2},
-      {'5', 0, 2}, {'6', 0, 2}, {'7', 0, 2}, {'8', 0, 2}, {'9', 0, 2},
-      {'-', 0, 1}, {'+', 0, 1}, {' ', 0, 1}, {'#', 0, 1}, {'0', 0, 1},
-      /* We found nothing */ {'\0', 0, -1}
-      };
-
-      /* Initialize tag to null */
+	parse_table table[] = {
+	{'d', 5, _found_spec}, {'i', 5, _found_spec}, {'c', 5, _found_spec},
+	{'s', 5, _found_spec}, {'u', 5, _found_spec}, {'o', 5, _found_spec},
+	{'x', 5, _found_spec}, {'X', 5, _found_spec}, {'b', 5, _found_spec},
+	{'S', 5, _found_spec}, {'p', 5, _found_spec}, {'R', 5, _found_spec},
+	{'r', 5, _found_spec}, {'%', 5, _found_spec},
+	{'h', 4, _found_length}, {'l', 4, _found_length},
+	{'.', 3, _found_prec},
+	{'1', 2, _found_width}, {'2', 2, _found_width}, {'3', 2, _found_width},
+	{'4', 2, _found_width}, {'5', 2, _found_width}, {'6', 2, _found_width},
+	{'7', 2, _found_width}, {'8', 2, _found_width}, {'9', 2, _found_width},
+	{'-', 1, _found_flag}, {'+', 1, _found_flag}, {' ', 1, _found_flag},
+	{'#', 1, _found_flag}, {'0', 1, _found_flag},
+	/* We found nothing */ {'\0', -1}
+	};
+	/* Initialize tag to null */
 	t->spec = '\0';
 	t->length = '\0';
 	t->prec = -1;
@@ -109,14 +110,20 @@ void _create_tag(buffer *b_r, tags *t)
  */
 void _parse_tag(parse_table *table, tags *t, buffer *b_r)
 {
-	int currentLevel, i, j, tmp, found; tmp = currentLevel = i = j = found = 0;
+	int currentLevel, i, j, tmp; 
 
+	tmp = currentLevel = i = j = 0;
 	while (table[i].level >= currentLevel && currentLevel < 5)
 	{
 		if (table[i].c == b_r->format[b_r->fp] || table[i].c == '\0')
 		{
 			currentLevel = table[i].level;
-			switch (table[i].level)
+			if (table[i].level == 2)
+				table[i].f(b_r, t);
+			else
+				table[i].f(b_r, t, table, i);
+			i = -1;
+			/*switch (table[i].level)
 			{
 			case 5:     
 				_found_spec(b_r, t, table, i);
@@ -137,7 +144,7 @@ void _parse_tag(parse_table *table, tags *t, buffer *b_r)
 				_found_flag(b_r, t, table, i);
 				i = -1;
 				break;
-			}
+			}*/
 		}
 		i++;
 	}

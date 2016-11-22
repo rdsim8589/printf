@@ -11,12 +11,12 @@ void _found_length(buffer *b_r, tags *t, parse_table *table, int i)
 	t->scanned[t->scan_i++] = table[i].c;
 	b_r->fp++;
 }
-void _found_prec(buffer *b_r, tags *t)
+void _found_prec(buffer *b_r, tags *t, parse_table *table, int i)
 {
 	int tmp;
 
 	b_r->fp++;
-	t->scanned[t->scan_i++] = '.';
+	t->scanned[t->scan_i++] = table[i].c;
 	tmp = t->prec = __atoi(b_r->format, b_r->fp);
 	/* must include i to s here to put in t->scanned */
 	while (tmp)
