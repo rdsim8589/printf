@@ -81,12 +81,14 @@ void _parse(buffer *b_r)
 	printf("t.spec = %c\n", t.spec);
 	if (t.spec == 'c')
 		_spec_c(b_r, &t);
-     if (t.spec == 's')
-          _spec_s(b_r, &t);
+ 	if (t.spec == 's')
+		_spec_s(b_r, &t);
 	if (t.spec == '\0')
 		_spec_0(b_r, &t);
 	if (t.spec == '%')
 		b_r->buf[b_r->bp++] = '%';
+	if (t.spec == 'p')
+		_spec_p(b_r, &t);
 }
 /**
  * _create_tag - Initialize and parse, creating a valid tag

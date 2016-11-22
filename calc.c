@@ -1,4 +1,5 @@
 #include "holberton.h"
+#include <stdio.h>
 /**
  * __atoi - take string, and find number the starts at point n
  * @s: string to read
@@ -44,4 +45,18 @@ int str_len(char *str)
 	while (str[i] != '\0')
 		i++;
 	return (i);
+}
+void _revstr(char *s)
+{
+	int len, i;
+	char tmp;
+
+	i = 0;
+	len = str_len(s) - 1;
+	while (i <= len / 2)
+	{
+		tmp = s[len - i];
+		s[len - i] = s[i];
+		s[i++] = tmp;
+	}
 }

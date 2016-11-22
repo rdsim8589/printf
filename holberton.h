@@ -61,10 +61,14 @@ void _spec_c(buffer *b_r, tags *t);
 void _spec_s(buffer *b_r, tags *t);
 void _spec_0(buffer *b_r, tags *t);
 void _spec_pct(buffer *b_r);
+void _spec_p(buffer *b_r, tags *t);
 int __atoi(const char *s, int n);
 void _write(buffer *b_r);
 void _parse_tag(buffer *b_r, tags *t, parse_table *table);
 int str_len(char *str);
+void _revstr(char *s);
+/* hexcalc functions */
+char *_litoh(long int x);
 /* printf_flag_helper functions */
 int _isFlagMinus(tags *t);
 int _isFlagPlus(tags *t);
