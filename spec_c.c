@@ -8,52 +8,46 @@ void _spec_c(buffer *b_r, tags *t)
 {
 	char hold;
 	char *b_str;
-	int i ,j ,k , minus, b_str_size;
+	int i, j, k, minus, b_str_size;
 
-	if (b_r != NULL)
+	/* get arg from va_arg and store */
+	hold = va_arg(b_r->ap, int);
+	minus = 0;
+	/* if width if found */
+	if (t->width > 1)
 	{
-		/* get arg from va_arg and store */
-		hold = va_arg(b_r->ap, int);
-		minus = 0;
-		/* if width if found */
-		if (t->width > 1)
+		b_str_size = t->width;
+		b_str = malloc(b_str_size * sizeof(char));
+		/*if - flag is found */
+		for (k = 0; t->flags[k] != '\0'; k++)
 		{
-			b_str_size = t->width;
-			b_str = malloc(b_str_size * sizeof(char));
-			/*if - flag is found */
-			k = 0;
-			while (t->flags[k] != '\0')
-			{
-				if (t->flags[k] == '-')
-					minus = 1;
-				k++;
-			}
-			i = 0;
-			/*- flag found, hold left most */
-			if (minus == 1)
-			{
-				b_str[i++] = hold;
-				while (i < b_str_size)
-					b_str[i++] = ' ';
-			}
-			/* - flag not found, hold right most*/
-			else
-			{
-				while (i < b_str_size - 1)
-					b_str[i++] = ' ';
-				b_str[i] = hold;
-			}
+			if (t->flags[k] == '-')
+				minus = 1;
 		}
-		/* no width given */
+		i = 0;
+		/*- flag found, hold left most */
+		if (minus == 1)
+		{
+			b_str[i++] = hold;
+			while (i < b_str_size)
+				b_str[i++] = ' ';
+		}
+		/* - flag not found, hold right most*/
 		else
+		{
+			while (i < b_str_size - 1)
+				b_str[i++] = ' ';
+			b_str[i] = hold;
+		}
+	}
+		/* no width given */
+	else
 		{
 			b_str_size = 1;
 			b_str = malloc(b_str_size * sizeof(char));
 			b_str[0] = hold;
 		}
-		j = 0;
-		while (j < b_str_size)
-			b_r->buf[b_r->bp++] = b_str[j++];
-	}
+	for (j = 0; j < b_str_size; j++)
+		b_r->buf[b_r->bp++] = b_str[j];
 	free(b_str);
 }
