@@ -67,6 +67,7 @@ void _write(buffer *b_r);
 void _parse_tag(buffer *b_r, tags *t, parse_table *table);
 int str_len(char *str);
 void _revstr(char *s);
+char *int_to_str(int n);
 /* hexcalc functions */
 char *_litoh(long int x);
 /* printf_flag_helper functions */
