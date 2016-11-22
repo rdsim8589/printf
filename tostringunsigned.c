@@ -1,10 +1,10 @@
 #include "holberton.h"
 #include <stdio.h>
 /**
- * _int_to_str - convert an int into it's absolute value string
+ * _uint_to_str - convert an int into it's absolute value string
  * @n: number to convert
  */
-char *_int_to_str(long int n)
+char *_uint_to_str(unsigned long int n)
 {
 	char *s;
 	int i;
@@ -26,10 +26,10 @@ char *_int_to_str(long int n)
 	return (s);
 }
 /**
- * _int_to_hexstr - convert a long int into a hex string
+ * _uint_to_hexstr - convert a long int into a hex string
  * @n: int to convert to hex
  */
-char *_int_to_hexstr(long int n)
+char *_uint_to_hexstr(unsigned long int n)
 {
 	char *s;
 	int tmp, i;
@@ -53,10 +53,10 @@ char *_int_to_hexstr(long int n)
 	return (s);
 }
 /**
- * _int_to_octstr - convert a long int into a oct string
+ * _uint_to_octstr - convert a long int into a oct string
  * @n: int to convert to hex
  */
-char *_int_to_octstr(long int n)
+char *_uint_to_octstr(unsigned long int n)
 {
 	char *s;
 	int tmp, i;
@@ -78,10 +78,10 @@ char *_int_to_octstr(long int n)
 	return (s);
 }
 /**
- * _int_to_binstr - convert a long int into a bin string
+ * _uint_to_binstr - convert a long int into a bin string
  * @n: int to convert to hex
  */
-char *_int_to_binstr(long int n)
+char *_uint_to_binstr(unsigned long int n)
 {
 	char *s;
 	int tmp, i;
