@@ -35,17 +35,23 @@ void _found_length(buffer *b_r, tags *t, parse_table *table, int i)
  */
 void _found_prec(buffer *b_r, tags *t, parse_table *table, int i)
 {
-	int tmp;
+	int tmp, j, len;
+	char *s;
 
 	b_r->fp++;
 	t->scanned[t->scan_i++] = table[i].c;
 	tmp = t->prec = __atoi(b_r->format, b_r->fp);
 	/* must include i to s here to put in t->scanned */
+	s = _int_to_str(tmp);
+	len = str_len(s);
+	for (j = 0; j < len; j++)
+		t->scanned[t->scan_i++] = s[j];
 	while (tmp)
 	{
 		tmp /= 10;
 		b_r->fp++;
 	}
+	free(s);
 }
 /**
  * _found_width - Puts the correct items in the tags t struct for found spec
@@ -54,16 +60,22 @@ void _found_prec(buffer *b_r, tags *t, parse_table *table, int i)
  */
 void _found_width(buffer *b_r, tags *t)
 {
-	int tmp;
+	int tmp, j, len;
+	char *s;
 
 	tmp = t->width = __atoi(b_r->format, b_r->fp);
 	/* must include i to s here to put in t->scanned */
+      s = _int_to_str(tmp);
+      len = str_len(s);
+      for (j = 0; j < len; j++)
+            t->scanned[t->scan_i++] = s[j];
 	printf("t->width = %d\n", tmp);
 	while (tmp)
 	{
 		tmp /= 10;
 		b_r->fp++;
 	}
+	free(s);
 }
 /**
  * _found_flag - Puts the correct items in the tags t struct for found spec
