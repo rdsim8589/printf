@@ -52,6 +52,7 @@ typedef struct parse_table
 	void (*tf)();
 	void (*specf)();
 } parse_table;
+/* printf functions */
 void _copy(buffer *);
 int _printf(const char *format, ...);
 void _parse(buffer *b_r);

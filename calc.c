@@ -30,3 +30,18 @@ void _write(buffer *b_r)
       b_r->printed += b_r->bp;
       b_r->bp = 0;
 }
+/**
+ * str_len - find the str len
+ * @str: a pointer to a str
+ *
+ * Return: length of string
+ */
+int str_len(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}

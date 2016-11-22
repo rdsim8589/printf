@@ -1,5 +1,4 @@
 #include "holberton.h"
-#include <stdio.h>
 /**
  * spec_s - sends va_arg with appropriate tags into buffer
  * @b_r: a pointer to the struct buffer
@@ -12,15 +11,14 @@ void _spec_s(buffer *b_r, tags *t)
 	int i, j, k, l, minus, b_str_size, hold_len;
 	/* get arg from va_arg and store */
 	hold = va_arg(b_r->ap, char *);
-	minus = i = 0;
+	minus = i = l = 0;
 	/*check the precision tag*/
-	printf("t->prec: %d\n", t->prec);
 	hold_len = str_len(hold);
 	/* if width if found */
 	if (t->width > hold_len)
 	{
 		b_str_size = t->width;
-		b_str = malloc(b_str_size * sizeof(char *));
+		b_str = malloc((b_str_size) * sizeof(char *));
 		/*if - flag is found */
 		for (k = 0; t->flags[k] != '\0'; k++)
 		{
@@ -39,7 +37,7 @@ void _spec_s(buffer *b_r, tags *t)
 		else
 		{
 			while (i < b_str_size - hold_len)
-				b_str[i++] = ' ';
+				b_str[i++] = ' ';	
 			while (i < b_str_size)
 				b_str[i++] = hold[l++];
 		}
@@ -56,18 +54,18 @@ void _spec_s(buffer *b_r, tags *t)
 		b_r->buf[b_r->bp++] = b_str[j];
 	free(b_str);
 }
-/**
- * str_len - find the str len
- * @str: a pointer to a str
- *
- * Return: length of string
- */
-int str_len(char *str)
-{
-	int i;
 
-	i = 0;
-	while (str[i++] != '\0')
-		;
-	return (i);
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
