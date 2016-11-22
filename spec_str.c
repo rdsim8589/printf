@@ -12,8 +12,10 @@ void _spec_s(buffer *b_r, tags *t)
 	int i, j, k, l, minus, b_str_size, hold_len;
 	/* get arg from va_arg and store */
 	hold = va_arg(b_r->ap, char *);
-	hold_len = str_len(hold);
 	minus = i = 0;
+	/*check the percision tag*/
+	printf("t->spec: %c\n", t->spec);
+	hold_len = str_len(hold);
 	/* if width if found */
 	if (t->width > hold_len)
 	{
