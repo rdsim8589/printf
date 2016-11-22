@@ -49,13 +49,32 @@ void _copy(buffer *b_r)
 void _parse(buffer *b_r)
 {
 	tags t;
+	parse_table table[] = {
+	{'d', 5, _found_spec}, {'i', 5, _found_spec},
+	{'c', 5, _found_spec, _spec_c}, {'s', 5, _found_spec, _spec_s},
+	{'u', 5, _found_spec}, {'o', 5, _found_spec},
+	{'x', 5, _found_spec}, {'X', 5, _found_spec},
+	{'b', 5, _found_spec}, {'S', 5, _found_spec},
+	{'p', 5, _found_spec}, {'R', 5, _found_spec},
+	{'r', 5, _found_spec}, {'%', 5, _found_spec, _spec_pct},
+	{'h', 4, _found_length}, {'l', 4, _found_length},
+	{'.', 3, _found_prec},
+	{'1', 2, _found_width}, {'2', 2, _found_width},
+	{'3', 2, _found_width}, {'4', 2, _found_width},
+	{'5', 2, _found_width}, {'6', 2, _found_width},
+	{'7', 2, _found_width}, {'8', 2, _found_width},
+	{'9', 2, _found_width}, {'-', 1, _found_flag},
+	{'+', 1, _found_flag}, {' ', 1, _found_flag},
+	{'#', 1, _found_flag}, {'0', 1, _found_flag},
+	/* We found nothing */ {'\0', -1, _found_flag, _spec_0}
+	};
 
 	if (b_r->format[b_r->fp] != '%' && b_r->format[b_r->fp] != '\0')
 		write(1, "Parsed not at percent or null\n", 30);
 	if (b_r->format[b_r->fp] == '%')
 		b_r->fp++;
 
-	_create_tag(b_r, &t);
+	_create_tag(b_r, &t, table);
 
 	/* t now should be full of data.
 		Need to match the spec in t to the spec function and call */
@@ -74,24 +93,10 @@ void _parse(buffer *b_r)
  * @b_r: the buffer structure
  * @t: stuct to fill in with tags
  */
-void _create_tag(buffer *b_r, tags *t)
+void _create_tag(buffer *b_r, tags *t, parse_table *table)
 {
 	int i, j, currentLevel, tmp;
-	parse_table table[] = {
-	{'d', 5, _found_spec}, {'i', 5, _found_spec}, {'c', 5, _found_spec},
-	{'s', 5, _found_spec}, {'u', 5, _found_spec}, {'o', 5, _found_spec},
-	{'x', 5, _found_spec}, {'X', 5, _found_spec}, {'b', 5, _found_spec},
-	{'S', 5, _found_spec}, {'p', 5, _found_spec}, {'R', 5, _found_spec},
-	{'r', 5, _found_spec}, {'%', 5, _found_spec},
-	{'h', 4, _found_length}, {'l', 4, _found_length},
-	{'.', 3, _found_prec},
-	{'1', 2, _found_width}, {'2', 2, _found_width}, {'3', 2, _found_width},
-	{'4', 2, _found_width}, {'5', 2, _found_width}, {'6', 2, _found_width},
-	{'7', 2, _found_width}, {'8', 2, _found_width}, {'9', 2, _found_width},
-	{'-', 1, _found_flag}, {'+', 1, _found_flag}, {' ', 1, _found_flag},
-	{'#', 1, _found_flag}, {'0', 1, _found_flag},
-	/* We found nothing */ {'\0', -1}
-	};
+
 	/* Initialize tag to null */
 	t->spec = '\0';
 	t->length = '\0';
@@ -101,14 +106,14 @@ void _create_tag(buffer *b_r, tags *t)
 	t->flags[3] = '\0', t->flags[4] = '\0';
 	t->scan_i = 0;
 
-	_parse_tag(table, t, b_r);
+	_parse_tag(b_r, t, table);
 }
 /**
  * _init_tag(parse_table *table, tags *t)
  * @table: Parsing table to read the '%___' from format
  * @t: tags to send to our specifier function
  */
-void _parse_tag(parse_table *table, tags *t, buffer *b_r)
+void _parse_tag(buffer *b_r, tags *t, parse_table *table)
 {
 	int currentLevel, i, j, tmp; 
 
@@ -119,9 +124,9 @@ void _parse_tag(parse_table *table, tags *t, buffer *b_r)
 		{
 			currentLevel = table[i].level;
 			if (table[i].level == 2)
-				table[i].f(b_r, t);
+				table[i].tf(b_r, t);
 			else
-				table[i].f(b_r, t, table, i);
+				table[i].tf(b_r, t, table, i);
 			i = -1;
 			/*switch (table[i].level)
 			{

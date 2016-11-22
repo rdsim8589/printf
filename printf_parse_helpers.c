@@ -1,4 +1,5 @@
 #include "holberton.h"
+#include <stdio.h>
 void _found_spec(buffer *b_r, tags *t, parse_table *table, int i)
 {
 	t->spec = table[i].c;
@@ -31,6 +32,7 @@ void _found_width(buffer *b_r, tags *t)
 
 	tmp = t->width = __atoi(b_r->format, b_r->fp);
 	/* must include i to s here to put in t->scanned */
+	printf("t->width = %d\n", tmp);
 	while (tmp)
 	{
 		tmp /= 10;

@@ -49,18 +49,20 @@ typedef struct parse_table
 {
 	char c;
 	int level;
-	void (*f)();
+	void (*tf)();
+	void (*specf)();
 } parse_table;
 void _copy(buffer *);
 int _printf(const char *format, ...);
 void _parse(buffer *b_r);
-void _create_tag(buffer *b_r, tags *t);
+void _create_tag(buffer *b_r, tags *t, parse_table *table);
 void _spec_c(buffer *b_r, tags *t);
 void _spec_s(buffer *b_r, tags *t);
 void _spec_0(buffer *b_r, tags *t);
+void _spec_pct(buffer *b_r);
 int __atoi(const char *s, int n);
 void _write(buffer *b_r);
-void _parse_tag(parse_table *table, tags *t, buffer *b_r);
+void _parse_tag(buffer *b_r, tags *t, parse_table *table);
 int str_len(char *str);
 /* printf_flag_helper functions */
 int _isFlagMinus(tags *t);
