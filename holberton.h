@@ -36,6 +36,8 @@ typedef struct tags
 	int prec;
 	int width;
 	char flags[4];
+	char scanned[100];
+	int scan_i;
 } tags;
 /**
  * struct parse_table - Table used for parsing the %s
@@ -55,6 +57,7 @@ void _parse(buffer *b_r);
 void _create_tag(buffer *b_r, tags *t);
 void _spec_c(buffer *b_r, tags *t);
 void _spec_s(buffer *b_r, tags *t);
+void _spec_0(buffer *b_r, tags *t);
 int __atoi(const char *s, int n);
 void _write(buffer *b_r);
 void _parse_tag(parse_table *table, tags *t, buffer *b_r);

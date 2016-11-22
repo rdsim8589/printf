@@ -52,17 +52,25 @@ void _parse(buffer *b_r)
 
 	if (b_r->format[b_r->fp] != '%' && b_r->format[b_r->fp] != '\0')
 		write(1, "Parsed not at percent or null\n", 30);
-	if (b_r->format[b_r->fp] == '%')
-		b_r->fp++;
 
 	_create_tag(b_r, &t);
 
+	if (b_r->format[b_r->fp] == '%')
+	{
+		t.scanned[t.scan_i++] = '%';
+		b_r->fp++;
+	}
 	/* t now should be full of data.
 		Need to match the spec in t to the spec function and call */
+	printf("t.spec = %c\n", t.spec);
 	if (t.spec == 'c')
 		_spec_c(b_r, &t);
      if (t.spec == 's')
           _spec_s(b_r, &t);
+	if (t.spec == '\0')
+		_spec_0(b_r, &t);
+	if (t.spec == '%')
+		b_r->buf[b_r->bp++] = '%';
 }
 /**
  * _create_tag - Initialize and parse, creating a valid tag
@@ -80,7 +88,7 @@ void _create_tag(buffer *b_r, tags *t)
       {'1', 0, 2}, {'2', 0, 2}, {'3', 0, 2}, {'4', 0, 2},
       {'5', 0, 2}, {'6', 0, 2}, {'7', 0, 2}, {'8', 0, 2}, {'9', 0, 2},
       {'-', 0, 1}, {'+', 0, 1}, {' ', 0, 1}, {'#', 0, 1}, {'0', 0, 1},
-      /* We found nothing */ {'N', 0, -1}
+      /* We found nothing */ {'\0', 0, -1}
       };
 
       /* Initialize tag to null */
@@ -90,6 +98,7 @@ void _create_tag(buffer *b_r, tags *t)
 	t->width = -1;
 	t->flags[0] = '\0', t->flags[1] = '\0', t->flags[2] = '\0';
 	t->flags[3] = '\0', t->flags[4] = '\0';
+	t->scan_i = 0;
 
 	_parse_tag(table, t, b_r);
 }
@@ -104,7 +113,7 @@ void _parse_tag(parse_table *table, tags *t, buffer *b_r)
 
 	while (table[i].level >= currentLevel && currentLevel < 5)
 	{
-		if (table[i].c == b_r->format[b_r->fp] || table[i].c == 'N')
+		if (table[i].c == b_r->format[b_r->fp] || table[i].c == '\0')
 		{
 			currentLevel = table[i].level;
 			switch (table[i].level)
