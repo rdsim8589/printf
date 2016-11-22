@@ -59,4 +59,5 @@ int __atoi(const char *s, int n);
 void _write(buffer *b_r);
 void _parse_tag(parse_table *table, tags *t, buffer *b_r);
 int str_len(char *str);
+int _isFlagMinus(tags *t);
 #endif

@@ -61,6 +61,8 @@ void _parse(buffer *b_r)
 		Need to match the spec in t to the spec function and call */
 	if (t.spec == 'c')
 		_spec_c(b_r, &t);
+     if (t.spec == 's')
+          _spec_s(b_r, &t);
 }
 /**
  * _create_tag - Initialize and parse, creating a valid tag

@@ -3,7 +3,7 @@
  * _isFlagMinus - Bool check for if the stuct has a minus flag
  * @t: tags structure to check
  */
-_isFlagMinus(tags *t)
+int _isFlagMinus(tags *t)
 {
 	int i;
 

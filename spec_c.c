@@ -8,25 +8,18 @@ void _spec_c(buffer *b_r, tags *t)
 {
 	char hold;
 	char *b_str;
-	int i, j, k, minus, b_str_size;
+	int i, j, k, b_str_size;
 
 	/* get arg from va_arg and store */
 	hold = va_arg(b_r->ap, int);
-	minus = 0;
 	/* if width if found */
 	if (t->width > 1)
 	{
 		b_str_size = t->width;
 		b_str = malloc(b_str_size * sizeof(char));
-		/*if - flag is found */
-		for (k = 0; t->flags[k] != '\0'; k++)
-		{
-			if (t->flags[k] == '-')
-				minus = 1;
-		}
 		i = 0;
 		/*- flag found, hold left most */
-		if (minus == 1)
+		if (_isFlagMinus)
 		{
 			b_str[i++] = hold;
 			while (i < b_str_size)
