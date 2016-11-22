@@ -3,6 +3,8 @@
 /**
  * _int_to_str - convert an int into it's absolute value string
  * @n: number to convert
+ *
+ * Return: string to string'ed number
  */
 char *_int_to_str(long int n)
 {
@@ -11,7 +13,6 @@ char *_int_to_str(long int n)
 
 	i = 0;
 	s = malloc(21 * sizeof(char));
-   
 	if (n == 0)
 		s[i] = '0';
 	while (n != 0)
@@ -28,6 +29,8 @@ char *_int_to_str(long int n)
 /**
  * _int_to_hexstr - convert a long int into a hex string
  * @n: int to convert to hex
+ *
+ * Return: string to string'ed number
  */
 char *_int_to_hexstr(long int n)
 {
@@ -36,7 +39,6 @@ char *_int_to_hexstr(long int n)
 
 	i = 0;
 	s = malloc(21 * sizeof(char));
-	
 	while (n != 0)
 	{
 		tmp = n % 16;
@@ -55,6 +57,8 @@ char *_int_to_hexstr(long int n)
 /**
  * _int_to_octstr - convert a long int into a oct string
  * @n: int to convert to hex
+ *
+ * Return: string to string'ed number
  */
 char *_int_to_octstr(long int n)
 {
@@ -63,7 +67,7 @@ char *_int_to_octstr(long int n)
 
 	i = 0;
 	s = malloc(30 * sizeof(char));
-	
+
 	while (n != 0)
 	{
 		tmp = n % 8;
@@ -80,6 +84,8 @@ char *_int_to_octstr(long int n)
 /**
  * _int_to_binstr - convert a long int into a bin string
  * @n: int to convert to hex
+ *
+ * Return: string to string'ed number
  */
 char *_int_to_binstr(long int n)
 {
@@ -88,7 +94,7 @@ char *_int_to_binstr(long int n)
 
 	i = 0;
 	s = malloc(65 * sizeof(char));
-	
+
 	while (n != 0)
 	{
 		tmp = n % 2;

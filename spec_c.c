@@ -1,6 +1,6 @@
 #include "holberton.h"
 /**
- * spec_c - sends va_arg with appropriate tags into buffer
+ * _spec_c - sends va_arg with appropriate tags into buffer
  * @b_r: a pointer to the struct buffer
  * @t: a pointer to the struct tags
  */

@@ -5,7 +5,7 @@
  * @b_r: a pointer to the struct buffer
  * @t: a pointer to the struct tags
  */
-void _spec_p(buffer *b_r, tags *t __attribute__((unused)))
+void _spec_p(buffer *b_r, tags __attribute__((unused))(*t))
 {
 	long int hold;
 	char *s;
