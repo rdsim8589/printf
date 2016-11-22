@@ -76,12 +76,11 @@ void _parse(buffer *b_r)
 
 	_create_tag(b_r, &t, table);
 
-	/* t now should be full of data.
-		Need to match the spec in t to the spec function and call */
+	/* t now should be full of data. match t to the spec function and call*/
 	printf("t.spec = %c\n", t.spec);
 	if (t.spec == 'c')
 		_spec_c(b_r, &t);
- 	if (t.spec == 's')
+	if (t.spec == 's')
 		_spec_s(b_r, &t);
 	if (t.spec == '\0')
 		_spec_0(b_r, &t);
@@ -94,6 +93,7 @@ void _parse(buffer *b_r)
  * _create_tag - Initialize and parse, creating a valid tag
  * @b_r: the buffer structure
  * @t: stuct to fill in with tags
+ * @table: The parsing lookup table
  */
 void _create_tag(buffer *b_r, tags *t, parse_table *table)
 {
@@ -109,13 +109,14 @@ void _create_tag(buffer *b_r, tags *t, parse_table *table)
 	_parse_tag(b_r, t, table);
 }
 /**
- * _init_tag(parse_table *table, tags *t)
+ * _parse_tag - Build out the tags struct with tags found
+ * @b_r: the buffer structure
  * @table: Parsing table to read the '%___' from format
  * @t: tags to send to our specifier function
  */
 void _parse_tag(buffer *b_r, tags *t, parse_table *table)
 {
-	int currentLevel, i, j; 
+	int currentLevel, i, j;
 
 	currentLevel = i = j = 0;
 	while (table[i].level >= currentLevel && currentLevel < 5)
@@ -128,28 +129,6 @@ void _parse_tag(buffer *b_r, tags *t, parse_table *table)
 			else
 				table[i].tf(b_r, t, table, i);
 			i = -1;
-			/*switch (table[i].level)
-			{
-			case 5:     
-				_found_spec(b_r, t, table, i);
-				break;
-			case 4:
-				_found_length(b_r, t, table, i);
-				i = -1;
-				break;
-			case 3:
-				_found_prec(b_r, t);
-				i = -1;
-				break;
-			case 2:
-				_found_width(b_r, t);
-				i = -1;
-				break;
-			case 1:
-				_found_flag(b_r, t, table, i);
-				i = -1;
-				break;
-			}*/
 		}
 		i++;
 	}
