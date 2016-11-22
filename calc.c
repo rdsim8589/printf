@@ -6,7 +6,7 @@
  *
  * Return: Number parsed
  */
-__atoi(const char *s, int n)
+int __atoi(const char *s, int n)
 {
 	int number, i;
 
