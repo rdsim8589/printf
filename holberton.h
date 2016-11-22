@@ -54,7 +54,9 @@ int _printf(const char *format, ...);
 void _parse(buffer *b_r);
 void _create_tag(buffer *b_r, tags *t);
 void _spec_c(buffer *b_r, tags *t);
+void _spec_s(buffer *b_r, tags *t);
 int __atoi(const char *s, int n);
 void _write(buffer *b_r);
 void _parse_tag(parse_table *table, tags *t, buffer *b_r);
+int str_len(char *str);
 #endif
