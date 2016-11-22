@@ -52,3 +52,28 @@ char *_int_to_hexstr(long int n)
 	_revstr(s);
 	return (s);
 }
+/**
+ * _int_to_octstr - convert a long int into a oct string
+ * @n: int to convert to hex
+ */
+char *_int_to_octstr(long int n)
+{
+	char *s;
+	int tmp, i;
+
+	i = 0;
+	s = malloc(30 * sizeof(char));
+	
+	while (n != 0)
+	{
+		tmp = n % 8;
+		/* convert int to char */
+		if (tmp < 8)
+			tmp += '0';
+		s[i++] = tmp;
+		n /= 8;
+	}
+	s[i] = '\0';
+	_revstr(s);
+	return (s);
+}
