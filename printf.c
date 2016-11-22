@@ -50,22 +50,22 @@ void _parse(buffer *b_r)
 {
 	tags t;
 	parse_table table[] = {
-	{'d', 5, _found_spec}, {'i', 5, _found_spec},
+	{'d', 5, _found_spec, _broken}, {'i', 5, _found_spec, _broken},
 	{'c', 5, _found_spec, _spec_c}, {'s', 5, _found_spec, _spec_s},
-	{'u', 5, _found_spec}, {'o', 5, _found_spec},
-	{'x', 5, _found_spec}, {'X', 5, _found_spec},
-	{'b', 5, _found_spec}, {'S', 5, _found_spec},
-	{'p', 5, _found_spec}, {'R', 5, _found_spec},
-	{'r', 5, _found_spec}, {'%', 5, _found_spec, _spec_pct},
-	{'h', 4, _found_length}, {'l', 4, _found_length},
-	{'.', 3, _found_prec},
-	{'1', 2, _found_width}, {'2', 2, _found_width},
-	{'3', 2, _found_width}, {'4', 2, _found_width},
-	{'5', 2, _found_width}, {'6', 2, _found_width},
-	{'7', 2, _found_width}, {'8', 2, _found_width},
-	{'9', 2, _found_width}, {'-', 1, _found_flag},
-	{'+', 1, _found_flag}, {' ', 1, _found_flag},
-	{'#', 1, _found_flag}, {'0', 1, _found_flag},
+	{'u', 5, _found_spec, _broken}, {'o', 5, _found_spec, _broken},
+	{'x', 5, _found_spec, _broken}, {'X', 5, _found_spec, _broken},
+	{'b', 5, _found_spec, _broken}, {'S', 5, _found_spec, _broken},
+	{'p', 5, _found_spec, _broken}, {'R', 5, _found_spec, _broken},
+	{'r', 5, _found_spec, _broken}, {'%', 5, _found_spec, _spec_pct},
+	{'h', 4, _found_length, _broken}, {'l', 4, _found_length, _broken},
+	{'.', 3, _found_prec, _broken},
+	{'1', 2, _found_width, _broken}, {'2', 2, _found_width, _broken},
+	{'3', 2, _found_width, _broken}, {'4', 2, _found_width, _broken},
+	{'5', 2, _found_width, _broken}, {'6', 2, _found_width, _broken},
+	{'7', 2, _found_width, _broken}, {'8', 2, _found_width, _broken},
+	{'9', 2, _found_width, _broken}, {'-', 1, _found_flag, _broken},
+	{'+', 1, _found_flag, _broken}, {' ', 1, _found_flag, _broken},
+	{'#', 1, _found_flag, _broken}, {'0', 1, _found_flag, _broken},
 	/* We found nothing */ {'\0', -1, _found_flag, _spec_0}
 	};
 
@@ -97,8 +97,6 @@ void _parse(buffer *b_r)
  */
 void _create_tag(buffer *b_r, tags *t, parse_table *table)
 {
-	int i, j, currentLevel, tmp;
-
 	/* Initialize tag to null */
 	t->spec = '\0';
 	t->length = '\0';
@@ -117,9 +115,9 @@ void _create_tag(buffer *b_r, tags *t, parse_table *table)
  */
 void _parse_tag(buffer *b_r, tags *t, parse_table *table)
 {
-	int currentLevel, i, j, tmp; 
+	int currentLevel, i, j; 
 
-	tmp = currentLevel = i = j = 0;
+	currentLevel = i = j = 0;
 	while (table[i].level >= currentLevel && currentLevel < 5)
 	{
 		if (table[i].c == b_r->format[b_r->fp] || table[i].c == '\0')

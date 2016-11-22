@@ -29,7 +29,7 @@ void _spec_s(buffer *b_r, tags *t)
 		if (minus == 1)
 		{
 			while (i < hold_len)
-				b_str[i] = hold[i++];
+				b_str[i] = hold[i], i++;
 			while (i < b_str_size)
 				b_str[i++] = ' ';
 		}
@@ -48,7 +48,7 @@ void _spec_s(buffer *b_r, tags *t)
 		b_str_size = hold_len;
 		b_str = malloc(b_str_size * sizeof(char));
 		while (i < b_str_size)
-			b_str[i] = hold[i++];
+			b_str[i] = hold[i], i++;
 	}
 	for (j = 0; j < b_str_size; j++)
 		b_r->buf[b_r->bp++] = b_str[j];
