@@ -11,6 +11,8 @@ void _spec_s(buffer *b_r, tags *t)
 	int i, j, l, b_str_size, hold_len;
 	/* get arg from va_arg and store */
 	hold = va_arg(b_r->ap, char *);
+	if (hold == NULL)
+		hold = "(null)";
 	i = l = 0;
 	/*check the precision tag*/
 	hold_len = str_len(hold);

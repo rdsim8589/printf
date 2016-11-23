@@ -1,4 +1,5 @@
 #include "holberton.h"
+#include <stdio.h>
 /**
  * _spec_p - sends va_arg with appropirate tags into buffer
  * @b_r: a pointer to the struct buffer
@@ -10,13 +11,24 @@ void _spec_p(buffer *b_r, tags __attribute__((unused))(*t))
 	char *s;
 	int i;
 
-	hold = (long int)va_arg(b_r->ap, void *);
-	s = _int_to_hexstr(hold);
+	s = va_arg(b_r->ap, void *);
 
-	/* Print the hex into buffer */
-	b_r->buf[b_r->bp++] = '0';
-	b_r->buf[b_r->bp++] = 'x';
-	for (i = 0; s[i] != '\0'; i++)
-		b_r->buf[b_r->bp++] = s[i];
-	free(s);
+	if (s == NULL)
+	{
+		s = "(nil)";
+		for (i = 0; s[i] != '\0'; i++)
+			b_r->buf[b_r->bp++] = s[i];
+	}
+	else
+	{
+		hold = (long int)s;
+		s = _int_to_hexstr(hold);
+
+		b_r->buf[b_r->bp++] = '0';
+		b_r->buf[b_r->bp++] = 'x';
+
+		for (i = 0; s[i] != '\0'; i++)
+			b_r->buf[b_r->bp++] = s[i];
+		free(s);
+	}
 }
