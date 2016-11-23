@@ -107,4 +107,7 @@ void _found_flag(buffer *b_r, tags *t, parse_table *table, int i);
 /*spec num helper function*/
 void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus);
 int num_len(int n);
+void get_sign(tags *t, int minus, char *front);
+char *check_prec (char *tmp_str, char *num_str, tags *t, int s_len);
+void _out_of_time(char *buf_str, char *tmp_str, char *front, tags *t);
 #endif
