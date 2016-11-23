@@ -1,5 +1,4 @@
 #include "holberton.h"
-#include <stdio.h>
 /**
  * _printf - Recreate stdio's printf
  * @format: Formatted string to print to stdout
@@ -22,13 +21,13 @@ int _printf(const char *format, ...)
 	/* Main loop to create buffer from format string */
 	while (b_r.format[b_r.fp] != '\0')
 	{
-		printf("--start loop--\n");
 		_copy(&b_r);
-		printf("--start parse--\n");
 		_parse(&b_r);
 	}
 
 	_write(&b_r);
+
+	/* write(1, b_r->buf, b_r->bp); b_r->printed += b_r->bp;*/
 
 	va_end(b_r.ap);
 	return (b_r.printed);
@@ -48,50 +47,54 @@ void _copy(buffer *b_r)
  */
 void _parse(buffer *b_r)
 {
+	int i;
 	tags t;
+	parse_table table[] = {
+	{'d', 5, _found_spec, _spec_i_d}, {'i', 5, _found_spec, _spec_i_d},
+	{'c', 5, _found_spec, _spec_c}, {'s', 5, _found_spec, _spec_s},
+	{'u', 5, _found_spec, _broken}, {'o', 5, _found_spec, _broken},
+	{'x', 5, _found_spec, _broken}, {'X', 5, _found_spec, _broken},
+	{'b', 5, _found_spec, _broken}, {'S', 5, _found_spec, _spec_S},
+	{'p', 5, _found_spec, _spec_p}, {'R', 5, _found_spec, _spec_R},
+	{'r', 5, _found_spec, _spec_r}, {'%', 5, _found_spec, _spec_pct},
+	{'h', 4, _found_length, _broken}, {'l', 4, _found_length, _broken},
+	{'.', 3, _found_prec, _broken},
+	{'1', 2, _found_width, _broken}, {'2', 2, _found_width, _broken},
+	{'3', 2, _found_width, _broken}, {'4', 2, _found_width, _broken},
+	{'5', 2, _found_width, _broken}, {'6', 2, _found_width, _broken},
+	{'7', 2, _found_width, _broken}, {'8', 2, _found_width, _broken},
+	{'9', 2, _found_width, _broken}, {'-', 1, _found_flag, _broken},
+	{'+', 1, _found_flag, _broken}, {' ', 1, _found_flag, _broken},
+	{'#', 1, _found_flag, _broken}, {'0', 1, _found_flag, _broken},
+	/* We found nothing */ {'\0', -1, _found_flag, _spec_0}
+	};
 
 	if (b_r->format[b_r->fp] != '%' && b_r->format[b_r->fp] != '\0')
 		write(1, "Parsed not at percent or null\n", 30);
-
-	_create_tag(b_r, &t);
-
 	if (b_r->format[b_r->fp] == '%')
-	{
-		t.scanned[t.scan_i++] = '%';
 		b_r->fp++;
+
+	_create_tag(b_r, &t, table);
+
+	i = 0;
+	while (table[i].level > 4)
+	{
+		if (t.spec == table[i].c)
+			table[i].specf(b_r, &t);
+		i++;
 	}
-	/* t now should be full of data.
-		Need to match the spec in t to the spec function and call */
-	printf("t.spec = %c\n", t.spec);
-	if (t.spec == 'c')
-		_spec_c(b_r, &t);
-     if (t.spec == 's')
-          _spec_s(b_r, &t);
 	if (t.spec == '\0')
 		_spec_0(b_r, &t);
-	if (t.spec == '%')
-		b_r->buf[b_r->bp++] = '%';
 }
 /**
  * _create_tag - Initialize and parse, creating a valid tag
  * @b_r: the buffer structure
  * @t: stuct to fill in with tags
+ * @table: The parsing lookup table
  */
-void _create_tag(buffer *b_r, tags *t)
+void _create_tag(buffer *b_r, tags *t, parse_table *table)
 {
-	int i, j, currentLevel, tmp;
-      parse_table table[] = {
-      {'d', 0, 5}, {'i', 0, 5}, {'c', 0, 5}, {'s', 0, 5}, {'u', 0, 5},
-      {'o', 0, 5}, {'x', 0, 5}, {'X', 0, 5}, {'b', 0, 5}, {'S', 0, 5},
-      {'p', 0, 5}, {'R', 0, 5}, {'r', 0, 5}, {'%', 0, 5},
-      {'h', 0, 4}, {'l', 0, 4}, {'.', 0, 3},
-      {'1', 0, 2}, {'2', 0, 2}, {'3', 0, 2}, {'4', 0, 2},
-      {'5', 0, 2}, {'6', 0, 2}, {'7', 0, 2}, {'8', 0, 2}, {'9', 0, 2},
-      {'-', 0, 1}, {'+', 0, 1}, {' ', 0, 1}, {'#', 0, 1}, {'0', 0, 1},
-      /* We found nothing */ {'\0', 0, -1}
-      };
-
-      /* Initialize tag to null */
+	/* Initialize tag to null */
 	t->spec = '\0';
 	t->length = '\0';
 	t->prec = -1;
@@ -100,50 +103,30 @@ void _create_tag(buffer *b_r, tags *t)
 	t->flags[3] = '\0', t->flags[4] = '\0';
 	t->scan_i = 0;
 
-	_parse_tag(table, t, b_r);
+	_parse_tag(b_r, t, table);
 }
 /**
- * _init_tag(parse_table *table, tags *t)
+ * _parse_tag - Build out the tags struct with tags found
+ * @b_r: the buffer structure
  * @table: Parsing table to read the '%___' from format
  * @t: tags to send to our specifier function
  */
-void _parse_tag(parse_table *table, tags *t, buffer *b_r)
+void _parse_tag(buffer *b_r, tags *t, parse_table *table)
 {
-	int currentLevel, i, j, tmp, found; tmp = currentLevel = i = j = found = 0;
+	int currentLevel, i, j;
 
+	currentLevel = i = j = 0;
 	while (table[i].level >= currentLevel && currentLevel < 5)
 	{
 		if (table[i].c == b_r->format[b_r->fp] || table[i].c == '\0')
 		{
 			currentLevel = table[i].level;
-			switch (table[i].level)
-			{
-			case 5:     
-				_found_spec(b_r, t, table, i);
-				break;
-			case 4:
-				_found_length(b_r, t, table, i);
-				i = -1;
-				break;
-			case 3:
-				_found_prec(b_r, t);
-				i = -1;
-				break;
-			case 2:
-				_found_width(b_r, t);
-				i = -1;
-				break;
-			case 1:
-				_found_flag(b_r, t, table, i);
-				i = -1;
-				break;
-			}
+			if (table[i].level == 2)
+				table[i].tf(b_r, t);
+			else
+				table[i].tf(b_r, t, table, i);
+			i = -1;
 		}
 		i++;
 	}
 }
-
-
-
-
-

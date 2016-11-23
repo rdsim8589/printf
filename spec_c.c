@@ -1,6 +1,6 @@
 #include "holberton.h"
 /**
- * spec_c - sends va_arg with appropriate tags into buffer
+ * _spec_c - sends va_arg with appropriate tags into buffer
  * @b_r: a pointer to the struct buffer
  * @t: a pointer to the struct tags
  */
@@ -8,7 +8,7 @@ void _spec_c(buffer *b_r, tags *t)
 {
 	char hold;
 	char *b_str;
-	int i, j, k, b_str_size;
+	int i, j, b_str_size;
 
 	/* get arg from va_arg and store */
 	hold = va_arg(b_r->ap, int);
@@ -19,7 +19,7 @@ void _spec_c(buffer *b_r, tags *t)
 		b_str = malloc(b_str_size * sizeof(char));
 		i = 0;
 		/*- flag found, hold left most */
-		if (_isFlagMinus)
+		if (_isFlagMinus(t))
 		{
 			b_str[i++] = hold;
 			while (i < b_str_size)

@@ -2,6 +2,8 @@
 /**
  * _isFlagMinus - Bool check for if the stuct has a minus flag
  * @t: tags structure to check
+ *
+ * Return: 1 if found, else 0
  */
 int _isFlagMinus(tags *t)
 {
@@ -15,6 +17,8 @@ int _isFlagMinus(tags *t)
 /**
  * _isFlagPlus - Bool check for if the stuct has a plus flag
  * @t: tags structure to check
+ *
+ * Return: 1 if found, else 0
  */
 int _isFlagPlus(tags *t)
 {
@@ -28,6 +32,8 @@ int _isFlagPlus(tags *t)
 /**
  * _isFlagSpace - Bool check for if the stuct has a space flag
  * @t: tags structure to check
+ *
+ * Return: 1 if found, else 0
  */
 int _isFlagSpace(tags *t)
 {
@@ -41,6 +47,8 @@ int _isFlagSpace(tags *t)
 /**
  * _isFlagHashtag - Bool check for if the stuct has a hashtag flag
  * @t: tags structure to check
+ *
+ * Return: 1 if found, else 0
  */
 int _isFlagHashtag(tags *t)
 {
@@ -54,6 +62,8 @@ int _isFlagHashtag(tags *t)
 /**
  * _isFlagZero - Bool check for if the stuct has a zero flag
  * @t: tags structure to check
+ *
+ * Return: 1 if found, else 0
  */
 int _isFlagZero(tags *t)
 {

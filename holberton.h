@@ -7,9 +7,11 @@
  * struct buffer - A buffer for our printf
  * @buf: Buffer to write characters
  * @format: The string passed to our printf
+ * @ap: the variadic address point
  * @bp: the current point in the buffer
  * @fp: the current point in the format
  * @size: the size of our buffer
+ * @printed: the number of chars printed from _write
  */
 typedef struct buffer
 {
@@ -28,6 +30,8 @@ typedef struct buffer
  * @prec: the precision
  * @width: the width
  * @flags: the flags
+ * @scanned: Array to hold characters scanned
+ * @scan_i: Number of chars scanned
  */
 typedef struct tags
 {
@@ -36,32 +40,58 @@ typedef struct tags
 	int prec;
 	int width;
 	char flags[4];
-	char scanned[100];
+	char scanned[128];
 	int scan_i;
 } tags;
 /**
  * struct parse_table - Table used for parsing the %s
  * @c: character found
- * @number: number for width and precision
  * @level: which level from 5 (specification) to 1 (flags)
+ * @tf: function to match the tag found to build tags struct
+ * @specf: function to put the matched specification into the buffer
  */
 typedef struct parse_table
 {
 	char c;
-	int number;
 	int level;
+	void (*tf)();
+	void (*specf)();
 } parse_table;
+/* printf functions */
 void _copy(buffer *);
 int _printf(const char *format, ...);
 void _parse(buffer *b_r);
-void _create_tag(buffer *b_r, tags *t);
+void _create_tag(buffer *b_r, tags *t, parse_table *table);
 void _spec_c(buffer *b_r, tags *t);
 void _spec_s(buffer *b_r, tags *t);
 void _spec_0(buffer *b_r, tags *t);
+void _spec_pct(buffer *b_r);
+void _spec_p(buffer *b_r, tags *t);
+void _spec_r(buffer *b_r, tags *t);
+void _spec_S(buffer *b_r, tags *t);
+void _spec_i_d(buffer *b_r, tags *t);
+void _spec_R(buffer *b_r, tags *t);
+void _broken(void);
 int __atoi(const char *s, int n);
 void _write(buffer *b_r);
-void _parse_tag(parse_table *table, tags *t, buffer *b_r);
+void _parse_tag(buffer *b_r, tags *t, parse_table *table);
 int str_len(char *str);
+void _revstr(char *s);
+char *_str_whelp(tags *t, char *hold, int hold_len);
+char *_to_hex_unreadable(char *hold);
+void _to_rot13(char *s);
+/* to string functions */
+char *_int_to_str(long int n);
+char *_int_to_hexstr(long int n);
+char *_int_to_caphexstr(long int n);
+char *_int_to_octstr(long int n);
+char *_int_to_binstr(long int n);
+/* unsigned to string functions */
+char *_uint_to_str(unsigned long int n);
+char *_uint_to_hexstr(unsigned long int n);
+char *_uint_to_caphexstr(unsigned long int n);
+char *_uint_to_octstr(unsigned long int n);
+char *_uint_to_binstr(unsigned long int n);
 /* printf_flag_helper functions */
 int _isFlagMinus(tags *t);
 int _isFlagPlus(tags *t);
@@ -71,7 +101,10 @@ int _isFlagZero(tags *t);
 /* parse helper functions */
 void _found_spec(buffer *b_r, tags *t, parse_table *table, int i);
 void _found_length(buffer *b_r, tags *t, parse_table *table, int i);
-void _found_prec(buffer *b_r, tags *t);
+void _found_prec(buffer *b_r, tags *t, parse_table *table, int i);
 void _found_width(buffer *b_r, tags *t);
 void _found_flag(buffer *b_r, tags *t, parse_table *table, int i);
+/*spec num helper function*/
+void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus);
+int num_len(int n);
 #endif
