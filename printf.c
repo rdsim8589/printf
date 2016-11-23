@@ -54,7 +54,7 @@ void _parse(buffer *b_r)
 	{'c', 5, _found_spec, _spec_c}, {'s', 5, _found_spec, _spec_s},
 	{'u', 5, _found_spec, _broken}, {'o', 5, _found_spec, _broken},
 	{'x', 5, _found_spec, _broken}, {'X', 5, _found_spec, _broken},
-	{'b', 5, _found_spec, _broken}, {'S', 5, _found_spec, _spec_S},
+	{'b', 5, _found_spec, _spec_b}, {'S', 5, _found_spec, _spec_S},
 	{'p', 5, _found_spec, _spec_p}, {'R', 5, _found_spec, _spec_R},
 	{'r', 5, _found_spec, _spec_r}, {'%', 5, _found_spec, _spec_pct},
 	{'h', 4, _found_length, _broken}, {'l', 4, _found_length, _broken},
