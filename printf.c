@@ -91,6 +91,10 @@ void _parse(buffer *b_r)
 		b_r->buf[b_r->bp++] = '%';
 	if (t.spec == 'p')
 		_spec_p(b_r, &t);
+	if (t.spec == 'S')
+		_spec_S(b_r, &t);
+	if (t.spec == 'r')
+		_spec_r(b_r, &t);
 }
 /**
  * _create_tag - Initialize and parse, creating a valid tag

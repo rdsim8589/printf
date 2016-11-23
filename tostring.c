@@ -55,6 +55,34 @@ char *_int_to_hexstr(long int n)
 	return (s);
 }
 /**
+ * _int_to_caphexstr - convert a long int into a hex string
+ * @n: int to convert to hex
+ *
+ * Return: string to string'ed number
+ */
+char *_int_to_caphexstr(long int n)
+{
+	char *s;
+	int tmp, i;
+
+	i = 0;
+	s = malloc(21 * sizeof(char));
+	while (n != 0)
+	{
+		tmp = n % 16;
+		/* convert int to char */
+		if (tmp < 10)
+			tmp += '0';
+		else
+			tmp += 'A' - 10;
+		s[i++] = tmp;
+		n /= 16;
+	}
+	s[i] = '\0';
+	_revstr(s);
+	return (s);
+}
+/**
  * _int_to_octstr - convert a long int into a oct string
  * @n: int to convert to hex
  *
