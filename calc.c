@@ -50,6 +50,12 @@ int str_len(char *str)
 		i++;
 	return (i);
 }
+/**
+ * _revstr - find the str len
+ * @s: a pointer to a str
+ *
+ * Return: length of string
+ */
 void _revstr(char *s)
 {
 	int len, i;
