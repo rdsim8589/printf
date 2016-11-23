@@ -28,7 +28,7 @@ void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 			tmp_str = malloc(perc * sizeof(char));
 			while (j < (perc - s_len))
 			{
-				tmp_str[j] = 0;
+				tmp_str[j] = '0';
 				j++;
 			}
 			while (j < perc)
@@ -63,7 +63,7 @@ void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 	{
 		buf_str = malloc(t->width * sizeof(char));
 		k = i = 0;
-		if (_isFlagZero(t) == 1 && _isFlagMinus(t) == 1)
+		if (_isFlagZero(t) == 1 && _isFlagMinus(t) == 0)
 		{
 			/*add front[] + '0' + tmp_str*/
 			/* add of front*/
@@ -125,8 +125,9 @@ void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 			/*add the remiaing space with width*/
 			while (k < t->width)
 			{
-				buf_str[k] = ' ';
+				buf_str[k] = tmp_str[i];
 				k++;
+				i++;
 			}
 		}
 		else
@@ -137,7 +138,7 @@ void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 	/*if width is less than len(tmp_str) + len(front)*/
 	else
 	{
-		
+
 	}
 	for (j = 0; j < b_str_size; j++)
 		b_r->buf[b_r->bp++] = b_str[j];
