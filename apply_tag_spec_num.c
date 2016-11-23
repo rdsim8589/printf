@@ -42,7 +42,12 @@ void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 		b_r->buf[b_r->bp++] = buf_str[j];
 	free(buf_str);
 }
-
+/**
+ * get_sign - get the sign and adds it to front string
+ * @t: struct tag
+ * @minus: minus sign
+ * @front: the char * to store the sign
+ */
 void get_sign(tags *t, int minus, char *front)
 {
 	if (t->spec == 'd' || t->spec == 'i')
@@ -64,6 +69,15 @@ void get_sign(tags *t, int minus, char *front)
 			front[1] = 'x';
 	}
 }
+/**
+ *check_prec - check if there is prec and remove 0 flag
+ * @tmp_str: ptr to a tmp_str
+ * @num_str: pointer to the number string
+ * @t: struct tag
+ * @s_len: length of the num_str
+ *
+ * Return: a pointer to tmp_str
+ */
 char *check_prec(char *tmp_str, char *num_str, tags *t, int s_len)
 {
 	int i, j, l;
@@ -93,7 +107,13 @@ char *check_prec(char *tmp_str, char *num_str, tags *t, int s_len)
 	}
 	return (tmp_str);
 }
-
+/**
+ * _out_of_time - something
+ * @buf_str: something
+ * @tmp_str :something
+ * @front: something
+ * @t: something
+ */
 void _out_of_time(char *buf_str, char *tmp_str, char *front, tags *t)
 {
 	int i, k;
