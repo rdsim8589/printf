@@ -22,7 +22,8 @@ int _printf(const char *format, ...)
 	while (b_r.format[b_r.fp] != '\0')
 	{
 		_copy(&b_r);
-		_parse(&b_r);
+		if (b_r.format[b_r.fp] != '\0')
+			_parse(&b_r);
 	}
 
 	write(1, b_r.buf, b_r.bp);
@@ -69,8 +70,6 @@ void _parse(buffer *b_r)
 	/* We found nothing */ {'\0', -1, _found_flag, _spec_0}
 	};
 
-	if (b_r->format[b_r->fp] == '%')
-		b_r->fp++;
 	_create_tag(b_r, &t, table);
 
 	i = 0;
@@ -98,9 +97,12 @@ void _create_tag(buffer *b_r, tags *t, parse_table *table)
 	t->width = -1;
 	t->flags[0] = '\0', t->flags[1] = '\0', t->flags[2] = '\0';
 	t->flags[3] = '\0', t->flags[4] = '\0';
-	t->scan_i = 1;
-	t->scanned[0] = '%';
-
+	if (b_r->format[b_r->fp] == '%')
+	{
+		b_r->fp++;
+		t->scan_i = 1;
+		t->scanned[0] = '%';
+	}
 	_parse_tag(b_r, t, table);
 }
 /**
