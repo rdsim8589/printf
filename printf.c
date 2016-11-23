@@ -99,7 +99,8 @@ void _create_tag(buffer *b_r, tags *t, parse_table *table)
 	t->width = -1;
 	t->flags[0] = '\0', t->flags[1] = '\0', t->flags[2] = '\0';
 	t->flags[3] = '\0', t->flags[4] = '\0';
-	t->scan_i = 0;
+	t->scan_i = 1;
+	t->scanned[0] = '%';
 
 	_parse_tag(b_r, t, table);
 }
