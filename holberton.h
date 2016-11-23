@@ -95,4 +95,6 @@ void _found_length(buffer *b_r, tags *t, parse_table *table, int i);
 void _found_prec(buffer *b_r, tags *t, parse_table *table, int i);
 void _found_width(buffer *b_r, tags *t);
 void _found_flag(buffer *b_r, tags *t, parse_table *table, int i);
+/*spec num helper function*/
+void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus);
 #endif
