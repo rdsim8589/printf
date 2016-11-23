@@ -8,6 +8,9 @@ We also handle the flags +, -, 0, #, (space), and precision and width for string
 Our custom specifiers:
 
 b: Format the int as binary.
+
 S: Format a string with unprintable characters replaced by Hex ie \n becomes '\x0A'.
+
 r: Format a string reversed.
+
 R: Format a string in ROT13.
