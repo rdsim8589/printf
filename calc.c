@@ -1,5 +1,4 @@
 #include "holberton.h"
-#include <stdio.h>
 /**
  * __atoi - take string, and find number the starts at point n
  * @s: string to read

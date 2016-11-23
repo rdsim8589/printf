@@ -1,5 +1,4 @@
 #include "holberton.h"
-#include <stdio.h>
 /**
  * _spec_p - sends va_arg with appropirate tags into buffer
  * @b_r: a pointer to the struct buffer
