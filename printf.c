@@ -30,6 +30,7 @@ int _printf(const char *format, ...)
 	/* write(1, b_r->buf, b_r->bp); b_r->printed += b_r->bp;*/
 
 	va_end(b_r.ap);
+	free(b_r.buf);
 	return (b_r.printed);
 }
 /**
