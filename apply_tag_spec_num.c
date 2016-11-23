@@ -13,41 +13,38 @@ void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 	int i, j, k, l, s_len, prec;
 	char *tmp_str;
 	char *buf_str;
-	char front[] = "\0\0";
+	char front[] = "\0\0\0";
 
 	tmp_str = num_str;
 	s_len = str_len(num_str);
-	prec = t->prec;
-	l = j = 0;
-	if (t->prec != -1)
+
+	tmp_str = check_prec(tmp_str, num_str, t, s_len);
+
+	get_sign(t, minus, front);
+	/*applying padding to num_str*/
+	printf("front:%s.\n", front);
+	if ((str_len(front) + str_len(tmp_str)) < t->width)
 	{
-		/*if prec found, set 0_flag to /0*/
-		/*might not need to 0_flag to /0. Applying padding to num_str should account for this*/
-/*
-		for (i = 0; i < 4; i++)
-		{
-			if (t->flags[i] == '0')
-				t->flags[i] == '\0';
-		}
-*/
-		/*adding zero if prec found*/
-		if (prec > s_len)
-		{
-			tmp_str = malloc(prec * sizeof(char));
-			while (j < (prec - s_len))
-			{
-				tmp_str[j] = '0';
-				j++;
-			}
-			while (j < prec)
-			{
-				tmp_str[j] = num_str[l];
-				j++;
-				l++;
-			}
-		}
+		buf_str = malloc(t->width * sizeof(char));
+		_out_of_time(buf_str, tmp_str, front, t);
 	}
-	/*adding signs depending on spec*/
+	else
+	{
+		buf_str = malloc((str_len(tmp_str) + str_len(front)) *
+				 sizeof(char));
+		k = i = 0;
+		while (front[k] != '\0')
+			buf_str[k] = front[k++];
+		while (k < (str_len(tmp_str) + str_len(front)))
+			buf_str[k++] = tmp_str[i++];
+	}
+	for (j = 0; j < str_len(buf_str); j++)
+		b_r->buf[b_r->bp++] = buf_str[j];
+	free(buf_str);
+}
+
+void get_sign(tags *t, int minus, char *front)
+{
 	if (t->spec == 'd' || t->spec == 'i')
 	{
 		if (minus == 1)
@@ -66,106 +63,77 @@ void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 		else if (t->spec == 'x')
 			front[1] = 'x';
 	}
-	/*applying padding to num_str*/
-	if ((str_len(front) + str_len(tmp_str)) < t->width)
+}
+char *check_prec(char *tmp_str, char *num_str, tags *t, int s_len)
+{
+	int i, j, l;
+
+	j = l = 0;
+	if (t->prec != -1)
 	{
-		buf_str = malloc(t->width * sizeof(char));
-		k = i = 0;
+		for (i = 0; i < 4; i++)
+		{
+			if (t->flags[i] == '0')
+				t->flags[i] = '\0';
+		}
+		printf("prec:%d s_len:%d\n", t->prec, s_len);
+		/*adding zero if prec found*/
+		if (t->prec > s_len)
+		{
+			tmp_str = malloc(t->prec * sizeof(char));
+			while (j < (t->prec - s_len))
+			{
+				tmp_str[j++] = '0';
+			}
+			while (j < t->prec)
+			{
+				tmp_str[j++] = num_str[l++];
+			}
+		}
+	}
+	return (tmp_str);
+}
+
+void _out_of_time(char *buf_str, char *tmp_str, char *front, tags *t)
+{
+	int i, k;
+
+		i = k = 0;
 		if (_isFlagZero(t) == 1 && _isFlagMinus(t) == 0)
 		{
 			/*add front[] + '0' + tmp_str*/
 			/* add of front*/
 			while (front[k] != '\0')
-			{
-				buf_str[k] = front[k];
-				k++;
-			}
+				buf_str[k] = front[k++];
 			/*add width - len(front) - len(tmp_str) amount of 0*/
 			while (k < (t->width - str_len(tmp_str) - str_len(front)))
 			{
-				buf_str[k] = '0';
-				k++;
+				buf_str[k++] = '0';
 			}
 			while (k < t->width)
-			{
-				buf_str[k] = tmp_str[i];
-				k++;
-				i++;
-			}
+				buf_str[k++] = tmp_str[i++];
 		}
 		else if (_isFlagMinus(t) == 1)
 		{
-			/*add front[] + tmp_str + "(space)"*/
-			/* add the front*/
 			while (front[k] != '\0')
-			{
-				buf_str[k] = front[k];
-				k++;
-			}
-			/*add tmp_str and starting with the index at str_len(front)*/
+				buf_str[k] = front[k++];
+
 			while (k < str_len(tmp_str) + str_len(front))
-			{
-				buf_str[k] = tmp_str[i];
-				k++;
-				i++;
-			}
+				buf_str[k++] = tmp_str[i++];
 			while (k < t->width)
-			{
-				buf_str[k] = ' ';
-				k++;
-			}
+				buf_str[k++] = ' ';
 		}
-		else/* if (_isFlagMinus == 0) */
-		{
-			/*add "(space)" + front[] + tmp_str*/
-			/*add width - len(front) - len(tmp_str) amount of  */
-			while (k < (t->width - str_len(tmp_str) - str_len(front)))
-			{
-				buf_str[k] = ' ';
-				k++;
-			}
-			/*add the front*/
-			while (front[k] != '\0')
-			{
-				buf_str[k] = front[k];
-				k++;
-			}
-			/*add the remiaing space with width*/
-			while (k < t->width)
-			{
-				buf_str[k] = tmp_str[i];
-				k++;
-				i++;
-			}
-		}
-		/*
 		else
 		{
-			printf("ERROR: not all tags caught by applying padding to num_str");
+
+			while (k < (t->width - str_len(tmp_str) -
+				    str_len(front + 1)))
+				buf_str[k++] = ' ';
+			/*add the front*/
+			while (front[k] != '\0')
+				buf_str[k] = front[k++];
+			/*add the remiaing space with width*/
+			while (k < t->width)
+				buf_str[k++] = tmp_str[i++];
 		}
-		*/
-	}
-	/*if width is less than len(tmp_str) + len(front)*/
-	else
-	{
-		/*add len(tmp_str) + len(front) */
-		buf_str = malloc((str_len(tmp_str) + str_len(front)) * sizeof(char));
-		k = i = 0;
-		while (front[k] != '\0')
-		{
-			buf_str[k] = front[k];
-			k++;
-		}
-		/*add the remiaing space with width*/
-		while (k < (str_len(tmp_str) + str_len(front)))
-		{
-			buf_str[k] = tmp_str[i];
-			k++;
-			i++;
-		}
-	}
-	for (j = 0; j < str_len(buf_str); j++)
-		b_r->buf[b_r->bp++] = buf_str[j];
-	/*_write(b_r, b_str[j])*/
-	free(buf_str);
 }
