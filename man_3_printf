@@ -16,7 +16,7 @@ prints non-printable characters as their hex values.
 .IP R:
 prints a string in rot13.
 .IP r:
-prints a string in reverse..
+prints a string in reverse.
 .SH SEE ALSO
 .I GNU printf(1)
 .SH BUGS

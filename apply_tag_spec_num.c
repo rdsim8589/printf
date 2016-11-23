@@ -1,5 +1,4 @@
 #include "holberton.h"
-#include <stdio.h>
 /**
  * _spec_num_help - applies the appropriate tags to a number specificer
  * @b_r: a pointer to the struct buffer
@@ -10,7 +9,7 @@
 
 void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 {
-	int i, j, k, l, s_len, prec;
+	int i, j, k, s_len;
 	char *tmp_str;
 	char *buf_str;
 	char front[] = "\0\0\0";
@@ -22,7 +21,6 @@ void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 
 	get_sign(t, minus, front);
 	/*applying padding to num_str*/
-	printf("front:%s.\n", front);
 	if ((str_len(front) + str_len(tmp_str)) < t->width)
 	{
 		buf_str = malloc(t->width * sizeof(char));
@@ -34,12 +32,12 @@ void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 				 sizeof(char));
 		k = i = 0;
 		while (front[k] != '\0')
-			buf_str[k] = front[k++];
+			buf_str[k] = front[k], k++;
 		while (k < (str_len(tmp_str) + str_len(front)))
 			buf_str[k++] = tmp_str[i++];
 	}
 	for (j = 0; j < str_len(buf_str); j++)
-		b_r->buf[b_r->bp++] = buf_str[j];
+		_write(b_r, buf_str[j]);
 	free(buf_str);
 }
 /**
@@ -90,7 +88,6 @@ char *check_prec(char *tmp_str, char *num_str, tags *t, int s_len)
 			if (t->flags[i] == '0')
 				t->flags[i] = '\0';
 		}
-		printf("prec:%d s_len:%d\n", t->prec, s_len);
 		/*adding zero if prec found*/
 		if (t->prec > s_len)
 		{
@@ -124,7 +121,7 @@ void _out_of_time(char *buf_str, char *tmp_str, char *front, tags *t)
 			/*add front[] + '0' + tmp_str*/
 			/* add of front*/
 			while (front[k] != '\0')
-				buf_str[k] = front[k++];
+				buf_str[k] = front[k], k++;
 			/*add width - len(front) - len(tmp_str) amount of 0*/
 			while (k < (t->width - str_len(tmp_str) - str_len(front)))
 			{
@@ -136,7 +133,7 @@ void _out_of_time(char *buf_str, char *tmp_str, char *front, tags *t)
 		else if (_isFlagMinus(t) == 1)
 		{
 			while (front[k] != '\0')
-				buf_str[k] = front[k++];
+				buf_str[k] = front[k], k++;
 
 			while (k < str_len(tmp_str) + str_len(front))
 				buf_str[k++] = tmp_str[i++];
@@ -151,7 +148,7 @@ void _out_of_time(char *buf_str, char *tmp_str, char *front, tags *t)
 				buf_str[k++] = ' ';
 			/*add the front*/
 			while (front[k] != '\0')
-				buf_str[k] = front[k++];
+				buf_str[k] = front[k], k++;
 			/*add the remiaing space with width*/
 			while (k < t->width)
 				buf_str[k++] = tmp_str[i++];

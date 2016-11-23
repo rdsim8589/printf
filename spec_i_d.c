@@ -7,7 +7,7 @@
 void _spec_i_d(buffer *b_r, tags *t)
 {
 	int ten_power, n_hold, minus, i;
-       	char *num_str;
+	char *num_str;
 
 	n_hold = va_arg(b_r->ap, int);
 	minus = i = 0;
@@ -18,7 +18,7 @@ void _spec_i_d(buffer *b_r, tags *t)
 	{
 		minus = 1;
 	}
-	num_str = malloc(num_len(n_hold) * sizeof(int));
+	num_str = malloc(1024);
 	while (num_len(ten_power) < num_len(n_hold))
 	{
 		ten_power *= 10;
@@ -30,6 +30,7 @@ void _spec_i_d(buffer *b_r, tags *t)
 		i++;
 	}
 	num_str[i] =  (-1 * (n_hold % 10 - '0'));
+	num_str[i + 1] = '\0';
 	_spec_num_help(b_r, t, num_str, minus);
 
 }
