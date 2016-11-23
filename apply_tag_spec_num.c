@@ -105,11 +105,11 @@ char *check_prec(char *tmp_str, char *num_str, tags *t, int s_len)
 	return (tmp_str);
 }
 /**
- * _out_of_time - something
- * @buf_str: something
- * @tmp_str :something
- * @front: something
- * @t: something
+ * _out_of_time - applies the format tags to and pushing it into buf_str
+ * @buf_str: empty string to be filled
+ * @tmp_str: prac format tag + the num_to_str
+ * @front: sign for num_to_str
+ * @t: pointer to stuct tag
  */
 void _out_of_time(char *buf_str, char *tmp_str, char *front, tags *t)
 {
