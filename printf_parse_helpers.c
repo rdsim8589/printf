@@ -1,5 +1,4 @@
 #include "holberton.h"
-#include <stdio.h>
 /**
  * _found_spec - Puts the correct items in the tags t struct for found spec
  * @b_r: buffer struct
@@ -68,8 +67,7 @@ void _found_width(buffer *b_r, tags *t)
       s = _int_to_str(tmp);
       len = str_len(s);
       for (j = 0; j < len; j++)
-            t->scanned[t->scan_i++] = s[j];
-	printf("t->width = %d\n", tmp);
+            t->scanned[t->scan_i++] = s[j];	
 	while (tmp)
 	{
 		tmp /= 10;

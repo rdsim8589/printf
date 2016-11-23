@@ -1,5 +1,4 @@
 #include "holberton.h"
-#include <stdio.h>
 /**
  * _printf - Recreate stdio's printf
  * @format: Formatted string to print to stdout
@@ -22,16 +21,13 @@ int _printf(const char *format, ...)
 	/* Main loop to create buffer from format string */
 	while (b_r.format[b_r.fp] != '\0')
 	{
-//		printf("--start loop--\n");
 		_copy(&b_r);
-//		printf("--start parse--\n");
 		_parse(&b_r);
 	}
 
 	_write(&b_r);
 
-	/* write(1, b_r->buf, b_r->bp);
-	b_r->printed += b_r->bp;*/
+	/* write(1, b_r->buf, b_r->bp); b_r->printed += b_r->bp;*/
 
 	va_end(b_r.ap);
 	return (b_r.printed);
@@ -51,15 +47,16 @@ void _copy(buffer *b_r)
  */
 void _parse(buffer *b_r)
 {
+	int i;
 	tags t;
 	parse_table table[] = {
-	{'d', 5, _found_spec, _broken}, {'i', 5, _found_spec, _broken},
+	{'d', 5, _found_spec, _spec_i_d}, {'i', 5, _found_spec, _spec_i_d},
 	{'c', 5, _found_spec, _spec_c}, {'s', 5, _found_spec, _spec_s},
 	{'u', 5, _found_spec, _broken}, {'o', 5, _found_spec, _broken},
 	{'x', 5, _found_spec, _broken}, {'X', 5, _found_spec, _broken},
-	{'b', 5, _found_spec, _broken}, {'S', 5, _found_spec, _broken},
-	{'p', 5, _found_spec, _broken}, {'R', 5, _found_spec, _broken},
-	{'r', 5, _found_spec, _broken}, {'%', 5, _found_spec, _spec_pct},
+	{'b', 5, _found_spec, _broken}, {'S', 5, _found_spec, _spec_S},
+	{'p', 5, _found_spec, _spec_p}, {'R', 5, _found_spec, _spec_R},
+	{'r', 5, _found_spec, _spec_r}, {'%', 5, _found_spec, _spec_pct},
 	{'h', 4, _found_length, _broken}, {'l', 4, _found_length, _broken},
 	{'.', 3, _found_prec, _broken},
 	{'1', 2, _found_width, _broken}, {'2', 2, _found_width, _broken},
@@ -79,24 +76,15 @@ void _parse(buffer *b_r)
 
 	_create_tag(b_r, &t, table);
 
-	/* t now should be full of data. match t to the spec function and call*/
-	printf("t.spec = %c\n", t.spec);
-	if (t.spec == 'c')
-		_spec_c(b_r, &t);
-	if (t.spec == 's')
-		_spec_s(b_r, &t);
+	i = 0;
+	while (table[i].level > 4)
+	{
+		if (t.spec == table[i].c)
+			table[i].specf(b_r, &t);
+		i++;
+	}
 	if (t.spec == '\0')
 		_spec_0(b_r, &t);
-	if (t.spec == '%')
-		b_r->buf[b_r->bp++] = '%';
-	if (t.spec == 'p')
-		_spec_p(b_r, &t);
-	if (t.spec == 'S')
-		_spec_S(b_r, &t);
-	if (t.spec == 'r')
-		_spec_r(b_r, &t);
-	if (t.spec == 'i' || t.spec == 'd')
-		_spec_i_d(b_r, &t);
 }
 /**
  * _create_tag - Initialize and parse, creating a valid tag
@@ -142,8 +130,3 @@ void _parse_tag(buffer *b_r, tags *t, parse_table *table)
 		i++;
 	}
 }
-
-
-
-
-

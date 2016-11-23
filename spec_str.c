@@ -1,5 +1,4 @@
 #include "holberton.h"
-#include <stdio.h>
 /**
  * _spec_s - sends va_arg with appropriate tags into buffer
  * @b_r: a pointer to the struct buffer
@@ -9,10 +8,10 @@ void _spec_s(buffer *b_r, tags *t)
 {
 	char *hold;
 	char *b_str;
-	int i, j, k, l, minus, b_str_size, hold_len;
+	int i, j, l, b_str_size, hold_len;
 	/* get arg from va_arg and store */
 	hold = va_arg(b_r->ap, char *);
-	minus = i = l = 0;
+	i = l = 0;
 	/*check the precision tag*/
 	hold_len = str_len(hold);
 	/* if prec is found, ignore width */
@@ -45,11 +44,11 @@ void _spec_S(buffer *b_r, tags *t)
 {
 	char *hold;
 	char *b_str;
-	int i, j, k, l, minus, b_str_size, hold_len;
+	int i, j, l, b_str_size, hold_len;
 	/* get arg from va_arg and store */
 	hold = va_arg(b_r->ap, char *);
-	minus = i = l = 0;
-	hold = _to_hex_unreadable(b_r, t, hold);
+	i = l = 0;
+	hold = _to_hex_unreadable(hold);
 	/*check the precision tag*/
 	hold_len = str_len(hold);
 	/* if prec is found, ignore width */
@@ -115,28 +114,26 @@ char *_str_whelp(tags *t, char *hold, int hold_len)
 }
 /**
  * _to_hex_unreadable - sends va_arg with appropriate tags into buffer
- * @b_r: a pointer to the struct buffer
- * @t: a pointer to the struct tags
  * @hold: string to convert
+ *
+ * Return: Pointer to edited string
  */
-char *_to_hex_unreadable(buffer *b_r, tags *t, char *hold)
+char *_to_hex_unreadable(char *hold)
 {
 	char *holdconv, *hexhold;
 	int i, j;
 
-	i= j = 0;
+	i = j = 0;
 	holdconv = malloc(1024);
 	while (hold[i] != '\0')
 	{
-		if (hold[i] >= 32 && hold[i] <= 127)
+		if (hold[i] >= 32 && hold[i] <= 126)
 			holdconv[j++] = hold[i];
 		else
 		{
 			holdconv[j++] = '\\';
 			holdconv[j++] = 'x';
-			printf("hold[i].%d.\n", hold[i]);
 			hexhold = _int_to_caphexstr(hold[i]);
-			printf("hexhold.%s.\n",hexhold);
 			if (hexhold[1] == '\0')
 			{
 				holdconv[j++] = '0';
