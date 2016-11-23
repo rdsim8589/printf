@@ -77,7 +77,7 @@ void _parse_tag(buffer *b_r, tags *t, parse_table *table);
 int str_len(char *str);
 void _revstr(char *s);
 char *_str_whelp(tags *t, char *hold, int hold_len);
-char *_to_hex_unreadable(buffer *b_r, tags *t, char *hold);
+char *_to_hex_unreadable(char *hold);
 void _to_rot13(char *s);
 /* to string functions */
 char *_int_to_str(long int n);

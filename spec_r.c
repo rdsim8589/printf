@@ -8,9 +8,9 @@ void _spec_r(buffer *b_r, tags *t)
 {
 	char *hold, *holdr;
 	char *b_str;
-	int i, j, k, l, minus, b_str_size, hold_len;
+	int i, j, l, b_str_size, hold_len;
 	hold = va_arg(b_r->ap, char *);
-	minus = i = l = 0;
+	i = l = 0;
 	holdr = malloc(1024);
 	while (hold[i] != '\0')
 		holdr[i] = hold[i], i++;
@@ -48,9 +48,9 @@ void _spec_R(buffer *b_r, tags *t)
 {
 	char *hold, *holdr;
 	char *b_str;
-	int i, j, k, l, minus, b_str_size, hold_len;
+	int i, j, l, b_str_size, hold_len;
 	hold = va_arg(b_r->ap, char *);
-	minus = i = l = 0;
+	i = l = 0;
 	holdr = malloc(1024);
 	while (hold[i] != '\0')
 		holdr[i] = hold[i], i++;
