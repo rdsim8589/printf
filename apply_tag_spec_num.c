@@ -1,7 +1,11 @@
 #include "holberton.h"
 #include <stdio.h>
 /**
- *
+ * _spec_num_help - applies the appropriate tags to a number specificer
+ * @b_r: a pointer to the struct buffer
+ * @t: a pointer to the struct tag
+ * @num_str: a pointer to a number that is converted into a string
+ * @minus: number negative if minus = 1 and number positive if minus = 0
  */
 
 void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
@@ -45,11 +49,11 @@ void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 	if (t->spec == 'd' || t->spec == 'i')
 	{
 		if (minus == 1)
-			front[1] = '-';
+			front[0] = '-';
 		else if (_isFlagPlus(t) == 1)
-			front[1] = '+';
+			front[0] = '+';
 		else if (_isFlagSpace(t) == 1)
-			front[1] = ' ';
+			front[0] = ' ';
 	}
 	else if ((t->spec == 'o' || t->spec == 'X' || t->spec == 'x') &&
 		 _isFlagHashtag(t) == 1)
@@ -109,7 +113,7 @@ void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 				k++;
 			}
 		}
-		else if (_isFlagMinus == 0)
+		else/* if (_isFlagMinus == 0) */
 		{
 			/*add "(space)" + front[] + tmp_str*/
 			/*add width - len(front) - len(tmp_str) amount of  */
@@ -132,10 +136,12 @@ void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 				i++;
 			}
 		}
+		/*
 		else
 		{
 			printf("ERROR: not all tags caught by applying padding to num_str");
 		}
+		*/
 	}
 	/*if width is less than len(tmp_str) + len(front)*/
 	else
