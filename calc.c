@@ -30,6 +30,15 @@ void _write(buffer *b_r)
       write(1, b_r->buf, b_r->bp);
       b_r->printed += b_r->bp;
       b_r->bp = 0;
+	/* New code for when we want to implement advanced writebuf
+
+	if (b_r->bp == 1024)
+	{
+		write(1, b_r->buf, b_r->bp);
+		b_r->printed += b_r->bp;
+		b_r->bp = 0;
+	}
+	b_r->buf[b_r[b_r->bp++] = c; */
 }
 /**
  * str_len - find the str len
