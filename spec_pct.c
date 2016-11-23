@@ -5,5 +5,5 @@
  */
 void _spec_pct(buffer *b_r)
 {
-	b_r->buf[b_r->bp++] = '%';
+	_write(b_r, '%');
 }

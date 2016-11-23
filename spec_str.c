@@ -34,7 +34,7 @@ void _spec_s(buffer *b_r, tags *t)
 			b_str[i] = hold[i], i++;
 	}
 	for (j = 0; j < b_str_size; j++)
-		b_r->buf[b_r->bp++] = b_str[j];
+		_write(b_r, b_str[j]);
 	free(b_str);
 }
 /**
@@ -72,7 +72,7 @@ void _spec_S(buffer *b_r, tags *t)
 			b_str[i] = holds[i], i++;
 	}
 	for (j = 0; j < b_str_size; j++)
-		b_r->buf[b_r->bp++] = b_str[j];
+		_write(b_r, b_str[j]);
 	free(b_str);
 	free(holds);
 }

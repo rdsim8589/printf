@@ -9,5 +9,5 @@ void _spec_0(buffer *b_r, tags *t)
 	int i;
 
 	for (i = 0; i < t->scan_i; i++)
-		b_r->buf[b_r->bp++] = t->scanned[i];
+		_write(b_r, t->scanned[i]);
 }
