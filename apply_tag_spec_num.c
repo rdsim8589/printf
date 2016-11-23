@@ -23,11 +23,13 @@ void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 	{
 		/*if prec found, set 0_flag to /0*/
 		/*might not need to 0_flag to /0. Applying padding to num_str should account for this*/
+/*
 		for (i = 0; i < 4; i++)
 		{
 			if (t->flags[i] == '0')
 				t->flags[i] == '\0';
 		}
+*/
 		/*adding zero if prec found*/
 		if (prec > s_len)
 		{
@@ -59,9 +61,9 @@ void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 		 _isFlagHashtag(t) == 1)
 	{
 		front[0] = '0';
-		if (t->spec = 'X')
+		if (t->spec == 'X')
 			front[1] = 'X';
-		else if (t->spec = 'x')
+		else if (t->spec == 'x')
 			front[1] = 'x';
 	}
 	/*applying padding to num_str*/
