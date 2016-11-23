@@ -71,7 +71,6 @@ void _parse(buffer *b_r)
 
 	if (b_r->format[b_r->fp] == '%')
 		b_r->fp++;
-
 	_create_tag(b_r, &t, table);
 
 	i = 0;
@@ -99,7 +98,6 @@ void _create_tag(buffer *b_r, tags *t, parse_table *table)
 	t->width = -1;
 	t->flags[0] = '\0', t->flags[1] = '\0', t->flags[2] = '\0';
 	t->flags[3] = '\0', t->flags[4] = '\0';
-	t->scan_i = 0;
 
 	_parse_tag(b_r, t, table);
 }
