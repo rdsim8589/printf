@@ -15,7 +15,7 @@ void _spec_r(buffer *b_r, tags *t)
 	{
 		hold = "(null)";
 		for (j = 0; j < 6; j++)
-			b_r->buf[b_r->bp++] = b_str[j];
+			b_r->buf[b_r->bp++] = hold[j];
 	}
 	else
 	{
@@ -62,7 +62,7 @@ void _spec_R(buffer *b_r, tags *t)
 	{
 		hold = "(null)";
 		for (j = 0; j < 6; j++)
-		b_r->buf[b_r->bp++] = b_str[j];
+		b_r->buf[b_r->bp++] = hold[j];
 	}
 	else
 	{
