@@ -25,9 +25,8 @@ int _printf(const char *format, ...)
 		_parse(&b_r);
 	}
 
-	_write(&b_r);
-
-	/* write(1, b_r->buf, b_r->bp); b_r->printed += b_r->bp;*/
+	write(1, b_r.buf, b_r.bp); 
+	b_r.printed += b_r.bp;
 
 	va_end(b_r.ap);
 	free(b_r.buf);

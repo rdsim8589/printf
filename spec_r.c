@@ -15,7 +15,7 @@ void _spec_r(buffer *b_r, tags *t)
 	{
 		hold = "(null)";
 		for (j = 0; j < 6; j++)
-			b_r->buf[b_r->bp++] = hold[j];
+			_write(b_r, hold[j]);
 	}
 	else
 	{
@@ -41,7 +41,7 @@ void _spec_r(buffer *b_r, tags *t)
 				b_str[i] = holdr[i], i++;
 		}
 		for (j = 0; j < b_str_size; j++)
-			b_r->buf[b_r->bp++] = b_str[j];
+			_write(b_r, b_str[j]);
 		free(b_str);
 		free(holdr);
 	}
@@ -62,7 +62,7 @@ void _spec_R(buffer *b_r, tags *t)
 	{
 		hold = "(null)";
 		for (j = 0; j < 6; j++)
-		b_r->buf[b_r->bp++] = hold[j];
+		_write(b_r, hold[j]);
 	}
 	else
 	{
@@ -88,7 +88,7 @@ void _spec_R(buffer *b_r, tags *t)
 				b_str[i] = holdr[i], i++;
 		}
 		for (j = 0; j < b_str_size; j++)
-			b_r->buf[b_r->bp++] = b_str[j];
+			_write(b_r, b_str[j]);
 		free(b_str);
 		free(holdr);
 	}
