@@ -25,11 +25,11 @@ int _printf(const char *format, ...)
 		_parse(&b_r);
 	}
 
-	_write(&b_r);
-
-	/* write(1, b_r->buf, b_r->bp); b_r->printed += b_r->bp;*/
+	write(1, b_r.buf, b_r.bp); 
+	b_r.printed += b_r.bp;
 
 	va_end(b_r.ap);
+	free(b_r.buf);
 	return (b_r.printed);
 }
 /**
@@ -39,7 +39,7 @@ int _printf(const char *format, ...)
 void _copy(buffer *b_r)
 {
 	while (b_r->format[b_r->fp] != '%' && b_r->format[b_r->fp] != '\0')
-		b_r->buf[b_r->bp++] = b_r->format[b_r->fp++];
+		_write(b_r, b_r->format[b_r->fp++]);
 }
 /**
  * _parse - take string from % and parse tags into correct string for buffer
@@ -69,8 +69,6 @@ void _parse(buffer *b_r)
 	/* We found nothing */ {'\0', -1, _found_flag, _spec_0}
 	};
 
-	if (b_r->format[b_r->fp] != '%' && b_r->format[b_r->fp] != '\0')
-		write(1, "Parsed not at percent or null\n", 30);
 	if (b_r->format[b_r->fp] == '%')
 		b_r->fp++;
 

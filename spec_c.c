@@ -41,6 +41,6 @@ void _spec_c(buffer *b_r, tags *t)
 			b_str[0] = hold;
 		}
 	for (j = 0; j < b_str_size; j++)
-		b_r->buf[b_r->bp++] = b_str[j];
+		_write(b_r, b_str[j]);
 	free(b_str);
 }
