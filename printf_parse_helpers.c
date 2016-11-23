@@ -64,10 +64,10 @@ void _found_width(buffer *b_r, tags *t)
 
 	tmp = t->width = __atoi(b_r->format, b_r->fp);
 	/* must include i to s here to put in t->scanned */
-      s = _int_to_str(tmp);
-      len = str_len(s);
-      for (j = 0; j < len; j++)
-            t->scanned[t->scan_i++] = s[j];	
+	s = _int_to_str(tmp);
+	len = str_len(s);
+	for (j = 0; j < len; j++)
+		t->scanned[t->scan_i++] = s[j];
 	while (tmp)
 	{
 		tmp /= 10;
