@@ -73,6 +73,7 @@ void _write(buffer *b_r);
 void _parse_tag(buffer *b_r, tags *t, parse_table *table);
 int str_len(char *str);
 void _revstr(char *s);
+char *_str_whelp(tags *t, char *hold, int hold_len);
 /* to string functions */
 char *_int_to_str(long int n);
 char *_int_to_hexstr(long int n);
