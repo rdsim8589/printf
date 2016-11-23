@@ -1,17 +1,19 @@
 #include "holberton.h"
+#include <stdio.h>
 /**
  *
  */
 
 void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 {
-	int i, j, k, l, s_len, perc;
-	char* tmp_str;
+	int i, j, k, l, s_len, prec;
+	char *tmp_str;
+	char *buf_str;
 	char front[] = "\0\0";
 
 	tmp_str = num_str;
 	s_len = str_len(num_str);
-	perc = t->perc;
+	prec = t->prec;
 	l = j = 0;
 	if (t->prec != -1)
 	{
@@ -23,15 +25,15 @@ void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 				t->flags[i] == '\0';
 		}
 		/*adding zero if prec found*/
-		if (perc > s_len)
+		if (prec > s_len)
 		{
-			tmp_str = malloc(perc * sizeof(char));
-			while (j < (perc - s_len))
+			tmp_str = malloc(prec * sizeof(char));
+			while (j < (prec - s_len))
 			{
 				tmp_str[j] = '0';
 				j++;
 			}
-			while (j < perc)
+			while (j < prec)
 			{
 				tmp_str[j] = num_str[l];
 				j++;
@@ -40,7 +42,7 @@ void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 		}
 	}
 	/*adding signs depending on spec*/
-	if (t->spec = 'd' || t->spec = 'i')
+	if (t->spec == 'd' || t->spec == 'i')
 	{
 		if (minus == 1)
 			front[1] = '-';
@@ -49,7 +51,7 @@ void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 		else if (_isFlagSpace(t) == 1)
 			front[1] = ' ';
 	}
-	else if ((t->spec = 'o' || t->spec = 'X' || t->spec = 'x') &&
+	else if ((t->spec == 'o' || t->spec == 'X' || t->spec == 'x') &&
 		 _isFlagHashtag(t) == 1)
 	{
 		front[0] = '0';
@@ -85,7 +87,7 @@ void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 				i++;
 			}
 		}
-		else if (_isFlagMinus == 1)
+		else if (_isFlagMinus(t) == 1)
 		{
 			/*add front[] + tmp_str + "(space)"*/
 			/* add the front*/
@@ -138,10 +140,24 @@ void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 	/*if width is less than len(tmp_str) + len(front)*/
 	else
 	{
-
+		/*add len(tmp_str) + len(front) */
+		buf_str = malloc((str_len(tmp_str) + str_len(front)) * sizeof(char));
+		k = i = 0;
+		while (front[k] != '\0')
+		{
+			buf_str[k] = front[k];
+			k++;
+		}
+		/*add the remiaing space with width*/
+		while (k < (str_len(tmp_str) + str_len(front)))
+		{
+			buf_str[k] = tmp_str[i];
+			k++;
+			i++;
+		}
 	}
-	for (j = 0; j < b_str_size; j++)
-		b_r->buf[b_r->bp++] = b_str[j];
-	free(b_str);
-
+	for (j = 0; j < str_len(buf_str); j++)
+		b_r->buf[b_r->bp++] = buf_str[j];
+	/*_write(b_r, b_str[j])*/
+	free(buf_str);
 }
