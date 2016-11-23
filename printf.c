@@ -22,13 +22,16 @@ int _printf(const char *format, ...)
 	/* Main loop to create buffer from format string */
 	while (b_r.format[b_r.fp] != '\0')
 	{
-		printf("--start loop--\n");
+//		printf("--start loop--\n");
 		_copy(&b_r);
-		printf("--start parse--\n");
+//		printf("--start parse--\n");
 		_parse(&b_r);
 	}
 
 	_write(&b_r);
+
+	/* write(1, b_r->buf, b_r->bp);
+	b_r->printed += b_r->bp;*/
 
 	va_end(b_r.ap);
 	return (b_r.printed);
@@ -88,6 +91,10 @@ void _parse(buffer *b_r)
 		b_r->buf[b_r->bp++] = '%';
 	if (t.spec == 'p')
 		_spec_p(b_r, &t);
+	if (t.spec == 'S')
+		_spec_S(b_r, &t);
+	if (t.spec == 'r')
+		_spec_r(b_r, &t);
 }
 /**
  * _create_tag - Initialize and parse, creating a valid tag
