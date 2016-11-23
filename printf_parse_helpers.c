@@ -90,11 +90,18 @@ void _found_flag(buffer *b_r, tags *t, parse_table *table, int i)
 	j = 0;
 	while (1)
 	{
-		if (t->flags[j] == table[i].c)
-			break;
-		else if (t->flags[j] == '\0')
+		if (table[i].c == '0')
+			if (t->flags[j] == '1')
+				break;
+		else
+			if (t->flags[j] == table[i].c)
+				break;
+		if (t->flags[j] == '\0')
 		{
-			t->flags[j] = table[i].c;
+			if (table[i].c == '0')
+				t->flags[j] = '1';
+			else
+				t->flags[j] = table[i].c;
 			break;
 		}
 		j++;

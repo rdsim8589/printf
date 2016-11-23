@@ -25,8 +25,10 @@ int _isFlagPlus(tags *t)
 	int i;
 
 	for (i = 0; t->flags[i] != '\0'; i++)
+	{
 		if (t->flags[i] == '+')
 			return (1);
+	}
 	return (0);
 }
 /**
@@ -70,7 +72,7 @@ int _isFlagZero(tags *t)
 	int i;
 
 	for (i = 0; t->flags[i] != '\0'; i++)
-		if (t->flags[i] == '0')
+		if (t->flags[i] == '1')
 			return (1);
 	return (0);
 }

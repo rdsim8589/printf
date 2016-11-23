@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdarg.h>
+#include <stdio.h>
 /**
  * struct buffer - A buffer for our printf
  * @buf: Buffer to write characters

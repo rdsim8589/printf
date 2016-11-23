@@ -122,7 +122,7 @@ void _out_of_time(char *buf_str, char *tmp_str, char *front, tags *t)
 			/* add of front*/
 			while (front[k] != '\0')
 				buf_str[k] = front[k], k++;
-			/*add width - len(front) - len(tmp_str) amount of 0*/
+			/*add wth - len(front) - len(tmp_str) amount of 0*/
 			while (k < (t->width - str_len(tmp_str) - str_len(front)))
 			{
 				buf_str[k++] = '0';
@@ -142,7 +142,6 @@ void _out_of_time(char *buf_str, char *tmp_str, char *front, tags *t)
 		}
 		else
 		{
-
 			while (k < (t->width - str_len(tmp_str) -
 				    str_len(front + 1)))
 				buf_str[k++] = ' ';

@@ -71,7 +71,6 @@ void _parse(buffer *b_r)
 
 	if (b_r->format[b_r->fp] == '%')
 		b_r->fp++;
-
 	_create_tag(b_r, &t, table);
 
 	i = 0;
