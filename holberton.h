@@ -69,6 +69,7 @@ void _spec_pct(buffer *b_r);
 void _spec_p(buffer *b_r, tags *t);
 void _spec_r(buffer *b_r, tags *t);
 void _spec_S(buffer *b_r, tags *t);
+void _spec_o(buffer *b_r, tags *t);
 void _spec_b(buffer *b_r, tags *t);
 void _spec_i_d(buffer *b_r, tags *t);
 void _spec_R(buffer *b_r, tags *t);

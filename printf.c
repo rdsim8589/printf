@@ -52,7 +52,7 @@ void _parse(buffer *b_r)
 	parse_table table[] = {
 	{'d', 5, _found_spec, _spec_i_d}, {'i', 5, _found_spec, _spec_i_d},
 	{'c', 5, _found_spec, _spec_c}, {'s', 5, _found_spec, _spec_s},
-	{'u', 5, _found_spec, _broken}, {'o', 5, _found_spec, _broken},
+	{'u', 5, _found_spec, _broken}, {'o', 5, _found_spec, _spec_o},
 	{'x', 5, _found_spec, _broken}, {'X', 5, _found_spec, _broken},
 	{'b', 5, _found_spec, _spec_b}, {'S', 5, _found_spec, _spec_S},
 	{'p', 5, _found_spec, _spec_p}, {'R', 5, _found_spec, _spec_R},
