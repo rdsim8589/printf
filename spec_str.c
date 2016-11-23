@@ -42,22 +42,23 @@ void _spec_s(buffer *b_r, tags *t)
  */
 void _spec_S(buffer *b_r, tags *t)
 {
-	char *hold;
+	char *hold, *holds;
 	char *b_str;
 	int i, j, l, b_str_size, hold_len;
 	/* get arg from va_arg and store */
 	hold = va_arg(b_r->ap, char *);
 	i = l = 0;
-	hold = _to_hex_unreadable(hold);
+	holds = hold;
+	holds = _to_hex_unreadable(hold);
 	/*check the precision tag*/
-	hold_len = str_len(hold);
+	hold_len = str_len(holds);
 	/* if prec is found, ignore width */
 	if (t->prec != -1 && t->prec < hold_len)
 		hold_len = t->prec;
 	/* if width if found */
 	if (t->width > hold_len)
 	{
-		b_str = _str_whelp(t, hold, hold_len);
+		b_str = _str_whelp(t, holds, hold_len);
 		b_str_size = t->width;
 	}
 	/* no width given */
@@ -66,11 +67,12 @@ void _spec_S(buffer *b_r, tags *t)
 		b_str_size = hold_len;
 		b_str = malloc(b_str_size * sizeof(char));
 		while (i < b_str_size)
-			b_str[i] = hold[i], i++;
+			b_str[i] = holds[i], i++;
 	}
 	for (j = 0; j < b_str_size; j++)
 		b_r->buf[b_r->bp++] = b_str[j];
 	free(b_str);
+	free(holds);
 }
 /**
  * _str_whelp - sends va_arg with appropriate tags into buffer
@@ -85,7 +87,7 @@ char *_str_whelp(tags *t, char *hold, int hold_len)
 	int i, b_str_size, minus, k, l;
 	char *b_str;
 
-	i = k = l = 0;
+	minus = i = k = l = 0;
 	b_str_size = t->width;
 	b_str = malloc((b_str_size) * sizeof(char *));
 	/*if - flag is found */
@@ -144,6 +146,7 @@ char *_to_hex_unreadable(char *hold)
 				holdconv[j++] = hexhold[0];
 				holdconv[j++] = hexhold[1];
 			}
+			free(hexhold);
 		}
 		i++;
 	}

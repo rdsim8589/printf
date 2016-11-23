@@ -18,4 +18,5 @@ void _spec_p(buffer *b_r, tags __attribute__((unused))(*t))
 	b_r->buf[b_r->bp++] = 'x';
 	for (i = 0; s[i] != '\0'; i++)
 		b_r->buf[b_r->bp++] = s[i];
+	free(s);
 }
