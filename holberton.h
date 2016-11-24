@@ -78,7 +78,10 @@ void _spec_i_d(buffer *b_r, tags *t);
 void _spec_R(buffer *b_r, tags *t);
 void _broken(void);
 int __atoi(const char *s, int n);
+/* _write_to_buffer functions */
 void _write(buffer *b_r, char c);
+void _write_str(buffer *b_r, char *s);
+void _write_tmpbuf(buffer *b_r);
 void _parse_tag(buffer *b_r, tags *t, parse_table *table);
 int str_len(char *str);
 void _revstr(char *s);
