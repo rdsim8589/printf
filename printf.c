@@ -55,6 +55,7 @@ void _parse(buffer *b_r)
 	{'b', 5, _found_spec, _spec_b}, {'S', 5, _found_spec, _spec_S},
 	{'p', 5, _found_spec, _spec_p}, {'R', 5, _found_spec, _spec_R},
 	{'r', 5, _found_spec, _spec_r}, {'%', 5, _found_spec, _spec_pct},
+	/* Default */ {'\0', 5, _broken, _spec_nil},
 	{'h', 4, _found_length, _broken}, {'l', 4, _found_length, _broken},
 	{'.', 3, _found_prec, _broken},
 	{'1', 2, _found_width, _broken}, {'2', 2, _found_width, _broken},
@@ -64,7 +65,7 @@ void _parse(buffer *b_r)
 	{'9', 2, _found_width, _broken}, {'-', 1, _found_flag, _broken},
 	{'+', 1, _found_flag, _broken}, {' ', 1, _found_flag, _broken},
 	{'#', 1, _found_flag, _broken}, {'0', 1, _found_flag, _broken},
-	/* We found nothing */ {'\0', -1, _found_flag, _spec_0}
+	/* We found nothing */ {'\0', -1, _broken, _broken}
 	};
 
 	/* We only parse at %! */
@@ -76,15 +77,14 @@ void _parse(buffer *b_r)
 	_init_tag(&t);
 	_parse_tag(b_r, &t, table);
 
+	/* Call the specifier function matching the specifier found */
 	i = 0;
-	while (table[i].level > 4)
+	while (table[i].level == 5)
 	{
-		if (t.spec == table[i].c)
+		if (table[i].c == t.spec)
 			table[i].specf(b_r, &t);
 		i++;
 	}
-	if (t.spec == '\0')
-		_spec_0(b_r);
 }
 
 /**
@@ -100,7 +100,7 @@ void _parse_tag(buffer *b_r, tags *t, parse_table *table)
 	currentLevel = i = j = 0;
 	while (table[i].level >= currentLevel && currentLevel < 5)
 	{
-		if (table[i].c == b_r->format[b_r->fp] || table[i].c == '\0')
+		if (table[i].c == b_r->format[b_r->fp])
 		{
 			currentLevel = table[i].level;
 			if (table[i].level == 2)

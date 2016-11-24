@@ -1,9 +1,9 @@
 #include "holberton.h"
 /**
- * _spec_0 - sends t.scanned into buffer
+ * _spec_nil - sends t.scanned into buffer
  * @b_r: a pointer to the buffer
  */
-void _spec_0(buffer *b_r)
+void _spec_nil(buffer *b_r)
 {
 	int i;
 

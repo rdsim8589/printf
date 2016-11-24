@@ -64,7 +64,7 @@ void _init_tag(tags *t);
 void _init_buffer(buffer *b_r, const char *format);
 void _spec_c(buffer *b_r, tags *t);
 void _spec_s(buffer *b_r, tags *t);
-void _spec_0(buffer *b_r);
+void _spec_nil(buffer *b_r);
 void _spec_pct(buffer *b_r);
 void _spec_p(buffer *b_r, tags *t);
 void _spec_r(buffer *b_r, tags *t);
