@@ -32,7 +32,7 @@ void _spec_i_d(buffer *b_r, tags *t)
 	num_str[i] =  (-1 * (n_hold % 10 - '0'));
 	num_str[i + 1] = '\0';
 	_spec_num_help(b_r, t, num_str, minus);
-
+	free(num_str);
 }
 
 /**
