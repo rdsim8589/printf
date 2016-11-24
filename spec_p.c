@@ -7,7 +7,7 @@
  */
 void _spec_p(buffer *b_r, tags __attribute__((unused))(*t))
 {
-	long int hold;
+	size_t hold;
 	char *s;
 	int i;
 
@@ -21,7 +21,7 @@ void _spec_p(buffer *b_r, tags __attribute__((unused))(*t))
 	}
 	else
 	{
-		hold = (long int)s;
+		hold = (size_t)s;
 		s = _int_to_hexstr(hold);
 
 		_write(b_r, '0');

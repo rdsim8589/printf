@@ -28,13 +28,13 @@ void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 	}
 	else
 	{
-		buf_str = malloc((str_len(tmp_str) + str_len(front)) *
-				 sizeof(char));
+		buf_str = malloc((str_len(tmp_str) + 1 + str_len(front)) * sizeof(char));
 		k = i = 0;
 		while (front[k] != '\0')
 			buf_str[k] = front[k], k++;
 		while (k < (str_len(tmp_str) + str_len(front)))
 			buf_str[k++] = tmp_str[i++];
+		buf_str[k] = '\0';
 	}
 	for (j = 0; j < str_len(buf_str); j++)
 		_write(b_r, buf_str[j]);
@@ -152,4 +152,5 @@ void _out_of_time(char *buf_str, char *tmp_str, char *front, tags *t)
 			while (k < t->width)
 				buf_str[k++] = tmp_str[i++];
 		}
+		buf_str[k] = '\0';
 }
