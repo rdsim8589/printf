@@ -9,4 +9,5 @@ void _spec_nil(buffer *b_r)
 
 	for (i = 0; i < b_r->tp; i++)
 		_write(b_r, b_r->tmpbuf[i]);
+	b_r->tp = 0;
 }

@@ -71,6 +71,7 @@ void _parse(buffer *b_r)
 	/* We only parse at %! */
 	if (b_r->format[b_r->fp] != '%')
 		write(1, "Error: Parsing when not at '%'\n", 31);
+	b_r->tp = 0;
 	b_r->tmpbuf[b_r->tp++] = '%';
 	b_r->fp++;
 
