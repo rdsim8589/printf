@@ -152,5 +152,6 @@ char *_to_hex_unreadable(char *hold)
 		}
 		i++;
 	}
+	holdconv[j] = '\0';
 	return (holdconv);
 }

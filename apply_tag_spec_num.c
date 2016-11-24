@@ -28,13 +28,13 @@ void _spec_num_help(buffer *b_r, tags *t, char *num_str, int minus)
 	}
 	else
 	{
-		buf_str = malloc((str_len(tmp_str) + str_len(front)) *
-				 sizeof(char));
+		buf_str = malloc((str_len(tmp_str) + 1 + str_len(front)) * sizeof(char));
 		k = i = 0;
 		while (front[k] != '\0')
 			buf_str[k] = front[k], k++;
 		while (k < (str_len(tmp_str) + str_len(front)))
 			buf_str[k++] = tmp_str[i++];
+		buf_str[k] = '\0';
 	}
 	for (j = 0; j < str_len(buf_str); j++)
 		_write(b_r, buf_str[j]);
@@ -105,11 +105,11 @@ char *check_prec(char *tmp_str, char *num_str, tags *t, int s_len)
 	return (tmp_str);
 }
 /**
- * _out_of_time - something
- * @buf_str: something
- * @tmp_str :something
- * @front: something
- * @t: something
+ * _out_of_time - applies the format tags to and pushing it into buf_str
+ * @buf_str: empty string to be filled
+ * @tmp_str: prac format tag + the num_to_str
+ * @front: sign for num_to_str
+ * @t: pointer to stuct tag
  */
 void _out_of_time(char *buf_str, char *tmp_str, char *front, tags *t)
 {
@@ -122,7 +122,7 @@ void _out_of_time(char *buf_str, char *tmp_str, char *front, tags *t)
 			/* add of front*/
 			while (front[k] != '\0')
 				buf_str[k] = front[k], k++;
-			/*add width - len(front) - len(tmp_str) amount of 0*/
+			/*add wth - len(front) - len(tmp_str) amount of 0*/
 			while (k < (t->width - str_len(tmp_str) - str_len(front)))
 			{
 				buf_str[k++] = '0';
@@ -142,7 +142,6 @@ void _out_of_time(char *buf_str, char *tmp_str, char *front, tags *t)
 		}
 		else
 		{
-
 			while (k < (t->width - str_len(tmp_str) -
 				    str_len(front + 1)))
 				buf_str[k++] = ' ';
@@ -153,4 +152,5 @@ void _out_of_time(char *buf_str, char *tmp_str, char *front, tags *t)
 			while (k < t->width)
 				buf_str[k++] = tmp_str[i++];
 		}
+		buf_str[k] = '\0';
 }
