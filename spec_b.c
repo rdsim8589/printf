@@ -11,8 +11,6 @@ void _spec_b(buffer *b_r, tags *t)
 
 	n_hold = va_arg(b_r->ap, int);
 
-
-	num_str = malloc(1024);
 	num_str = _uint_to_binstr(n_hold);
 	_spec_num_help(b_r, t, num_str, 0);
 	free(num_str);
@@ -29,8 +27,6 @@ void _spec_o(buffer *b_r, tags *t)
 
 	n_hold = va_arg(b_r->ap, int);
 
-
-	num_str = malloc(1024);
 	num_str = _int_to_octstr(n_hold);
 	_spec_num_help(b_r, t, num_str, 0);
 	free(num_str);
@@ -47,8 +43,6 @@ void _spec_X(buffer *b_r, tags *t)
 
 	n_hold = va_arg(b_r->ap, int);
 
-
-	num_str = malloc(1024);
 	num_str = _uint_to_caphexstr(n_hold);
 	_spec_num_help(b_r, t, num_str, 0);
 	free(num_str);
@@ -65,8 +59,6 @@ void _spec_x(buffer *b_r, tags *t)
 
 	n_hold = va_arg(b_r->ap, int);
 
-
-	num_str = malloc(1024);
 	num_str = _uint_to_hexstr(n_hold);
 	_spec_num_help(b_r, t, num_str, 0);
 	free(num_str);
@@ -83,8 +75,6 @@ void _spec_u(buffer *b_r, tags *t)
 
 	n_hold = va_arg(b_r->ap, int);
 
-
-	num_str = malloc(1024);
 	num_str = _uint_to_str(n_hold);
 	_spec_num_help(b_r, t, num_str, 0);
 	free(num_str);
