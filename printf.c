@@ -10,12 +10,7 @@ int _printf(const char *format, ...)
 	/* Create buffer structure b_r and initalize */
 	buffer b_r;
 
-	b_r.format = format;
-	b_r.fp = 0;
-	b_r.bp = 0;
-	b_r.size = 1024;
-	b_r.buf = malloc(b_r.size);
-	b_r.printed = 0;
+	_init_buffer(&b_r, format);
 	va_start(b_r.ap, format);
 
 	/* Main loop to create buffer from format string */
@@ -31,6 +26,7 @@ int _printf(const char *format, ...)
 
 	va_end(b_r.ap);
 	free(b_r.buf);
+	free(b_r.tmpbuf);
 	return (b_r.printed);
 }
 /**
@@ -41,6 +37,7 @@ void _copy(buffer *b_r)
 {
 	while (b_r->format[b_r->fp] != '%' && b_r->format[b_r->fp] != '\0')
 		_write(b_r, b_r->format[b_r->fp++]);
+
 }
 /**
  * _parse - take string from % and parse tags into correct string for buffer
@@ -70,7 +67,8 @@ void _parse(buffer *b_r)
 	/* We found nothing */ {'\0', -1, _found_flag, _spec_0}
 	};
 
-	_create_tag(b_r, &t, table);
+	_init_tag(b_r, &t);
+	_parse_tag(b_r, &t, table);
 
 	i = 0;
 	while (table[i].level > 4)
@@ -82,29 +80,7 @@ void _parse(buffer *b_r)
 	if (t.spec == '\0')
 		_spec_0(b_r, &t);
 }
-/**
- * _create_tag - Initialize and parse, creating a valid tag
- * @b_r: the buffer structure
- * @t: stuct to fill in with tags
- * @table: The parsing lookup table
- */
-void _create_tag(buffer *b_r, tags *t, parse_table *table)
-{
-	/* Initialize tag to null */
-	t->spec = '\0';
-	t->length = '\0';
-	t->prec = -1;
-	t->width = -1;
-	t->flags[0] = '\0', t->flags[1] = '\0', t->flags[2] = '\0';
-	t->flags[3] = '\0', t->flags[4] = '\0';
-	if (b_r->format[b_r->fp] == '%')
-	{
-		b_r->fp++;
-		t->scan_i = 1;
-		t->scanned[0] = '%';
-	}
-	_parse_tag(b_r, t, table);
-}
+
 /**
  * _parse_tag - Build out the tags struct with tags found
  * @b_r: the buffer structure

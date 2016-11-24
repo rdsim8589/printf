@@ -5,23 +5,25 @@
 #include <stdarg.h>
 #include <stdio.h>
 /**
- * struct buffer - A buffer for our printf
- * @buf: Buffer to write characters
- * @format: The string passed to our printf
+ * struct buffer - buffer structure for our implimentation of printf
+ * @buf: buffer to write characters
+ * @tmpbuf: tmp buffer to write to before putting in buffer
+ * @format: the string passed to our printf
  * @ap: the variadic address point
  * @bp: the current point in the buffer
+ * @tp: the current point in the tmp buffer
  * @fp: the current point in the format
- * @size: the size of our buffer
  * @printed: the number of chars printed from _write
  */
 typedef struct buffer
 {
 	char *buf;
+	char *tmpbuf;
 	const char *format;
 	va_list ap;
 	int bp;
+	int tp;
 	int fp;
-	unsigned int size;
 	unsigned int printed;
 } buffer;
 /**
@@ -40,7 +42,7 @@ typedef struct tags
 	char length;
 	int prec;
 	int width;
-	char flags[4];
+	char flags[6];
 	char scanned[128];
 	int scan_i;
 } tags;
@@ -62,7 +64,8 @@ typedef struct parse_table
 void _copy(buffer *);
 int _printf(const char *format, ...);
 void _parse(buffer *b_r);
-void _create_tag(buffer *b_r, tags *t, parse_table *table);
+void _init_tag(buffer *b_r, tags *t);
+void _init_buffer(buffer *b_r, const char *format);
 void _spec_c(buffer *b_r, tags *t);
 void _spec_s(buffer *b_r, tags *t);
 void _spec_0(buffer *b_r, tags *t);
