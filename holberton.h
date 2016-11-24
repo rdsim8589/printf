@@ -33,8 +33,6 @@ typedef struct buffer
  * @prec: the precision
  * @width: the width
  * @flags: the flags
- * @scanned: Array to hold characters scanned
- * @scan_i: Number of chars scanned
  */
 typedef struct tags
 {
@@ -43,8 +41,6 @@ typedef struct tags
 	int prec;
 	int width;
 	char flags[6];
-	char scanned[128];
-	int scan_i;
 } tags;
 /**
  * struct parse_table - Table used for parsing the %s
@@ -64,11 +60,11 @@ typedef struct parse_table
 void _copy(buffer *);
 int _printf(const char *format, ...);
 void _parse(buffer *b_r);
-void _init_tag(buffer *b_r, tags *t);
+void _init_tag(tags *t);
 void _init_buffer(buffer *b_r, const char *format);
 void _spec_c(buffer *b_r, tags *t);
 void _spec_s(buffer *b_r, tags *t);
-void _spec_0(buffer *b_r, tags *t);
+void _spec_0(buffer *b_r);
 void _spec_pct(buffer *b_r);
 void _spec_p(buffer *b_r, tags *t);
 void _spec_r(buffer *b_r, tags *t);

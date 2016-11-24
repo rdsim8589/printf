@@ -9,7 +9,7 @@
 void _found_spec(buffer *b_r, tags *t, parse_table *table, int i)
 {
 	t->spec = table[i].c;
-	t->scanned[t->scan_i++] = table[i].c;
+	b_r->tmpbuf[b_r->tp++] = table[i].c;
 	b_r->fp++;
 }
 /**
@@ -22,7 +22,7 @@ void _found_spec(buffer *b_r, tags *t, parse_table *table, int i)
 void _found_length(buffer *b_r, tags *t, parse_table *table, int i)
 {
 	t->length = table[i].c;
-	t->scanned[t->scan_i++] = table[i].c;
+	b_r->tmpbuf[b_r->tp++] = table[i].c;
 	b_r->fp++;
 }
 /**
@@ -38,13 +38,13 @@ void _found_prec(buffer *b_r, tags *t, parse_table *table, int i)
 	char *s;
 
 	b_r->fp++;
-	t->scanned[t->scan_i++] = table[i].c;
+	b_r->tmpbuf[b_r->tp++] = table[i].c;
 	tmp = t->prec = __atoi(b_r->format, b_r->fp);
 	/* must include i to s here to put in t->scanned */
 	s = _int_to_str(tmp);
 	len = str_len(s);
 	for (j = 0; j < len; j++)
-		t->scanned[t->scan_i++] = s[j];
+		b_r->tmpbuf[b_r->tp++] = s[j];
 	while (tmp)
 	{
 		tmp /= 10;
@@ -67,7 +67,7 @@ void _found_width(buffer *b_r, tags *t)
 	s = _int_to_str(tmp);
 	len = str_len(s);
 	for (j = 0; j < len; j++)
-		t->scanned[t->scan_i++] = s[j];
+		b_r->tmpbuf[b_r->tp++] = s[j];
 	while (tmp)
 	{
 		tmp /= 10;
@@ -86,7 +86,7 @@ void _found_flag(buffer *b_r, tags *t, parse_table *table, int i)
 {
 	int j;
 
-	t->scanned[t->scan_i++] = table[i].c;
+	b_r->tmpbuf[b_r->tp++] = table[i].c;
 	j = 0;
 	while (1)
 	{

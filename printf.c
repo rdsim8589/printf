@@ -67,7 +67,13 @@ void _parse(buffer *b_r)
 	/* We found nothing */ {'\0', -1, _found_flag, _spec_0}
 	};
 
-	_init_tag(b_r, &t);
+	/* We only parse at %! */
+	if (b_r->format[b_r->fp] != '%')
+		write(1, "Error: Parsing when not at '%'\n", 31);
+	b_r->tmpbuf[b_r->tp++] = '%';
+	b_r->fp++;
+
+	_init_tag(&t);
 	_parse_tag(b_r, &t, table);
 
 	i = 0;
@@ -78,7 +84,7 @@ void _parse(buffer *b_r)
 		i++;
 	}
 	if (t.spec == '\0')
-		_spec_0(b_r, &t);
+		_spec_0(b_r);
 }
 
 /**

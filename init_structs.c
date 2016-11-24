@@ -1,24 +1,17 @@
 #include "holberton.h"
 /**
  * _init_tag - Initialize tag for parsing
- * @b_r: the buffer structure
  * @t: tags stuct to fill in with tags
  */
-void _init_tag(buffer *b_r, tags *t)
+void _init_tag(tags *t)
 {
-	/* Initialize tag */
+	/* Initialize tag to default values*/
 	t->spec = '\0';
 	t->length = '\0';
 	t->prec = -1;
 	t->width = -1;
 	t->flags[0] = '\0', t->flags[1] = '\0', t->flags[2] = '\0';
 	t->flags[3] = '\0', t->flags[4] = '\0'; t->flags[5] = '\0';
-	if (b_r->format[b_r->fp] == '%')
-	{
-		b_r->fp++;
-		t->scan_i = 1;
-		t->scanned[0] = '%';
-	}
 }
 /**
  * _init_buffer - Initialize the buffer structure
