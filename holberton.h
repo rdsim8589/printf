@@ -5,23 +5,25 @@
 #include <stdarg.h>
 #include <stdio.h>
 /**
- * struct buffer - A buffer for our printf
- * @buf: Buffer to write characters
- * @format: The string passed to our printf
+ * struct buffer - buffer structure for our implimentation of printf
+ * @buf: buffer to write characters
+ * @tmpbuf: tmp buffer to write to before putting in buffer
+ * @format: the string passed to our printf
  * @ap: the variadic address point
  * @bp: the current point in the buffer
+ * @tp: the current point in the tmp buffer
  * @fp: the current point in the format
- * @size: the size of our buffer
  * @printed: the number of chars printed from _write
  */
 typedef struct buffer
 {
 	char *buf;
+	char *tmpbuf;
 	const char *format;
 	va_list ap;
 	int bp;
+	int tp;
 	int fp;
-	unsigned int size;
 	unsigned int printed;
 } buffer;
 /**
@@ -31,8 +33,6 @@ typedef struct buffer
  * @prec: the precision
  * @width: the width
  * @flags: the flags
- * @scanned: Array to hold characters scanned
- * @scan_i: Number of chars scanned
  */
 typedef struct tags
 {
@@ -40,32 +40,29 @@ typedef struct tags
 	char length;
 	int prec;
 	int width;
-	char flags[4];
-	char scanned[128];
-	int scan_i;
+	char flags[6];
 } tags;
 /**
  * struct parse_table - Table used for parsing the %s
  * @c: character found
  * @level: which level from 5 (specification) to 1 (flags)
- * @tf: function to match the tag found to build tags struct
- * @specf: function to put the matched specification into the buffer
+ * @spec_func: function to put the matched specification into the buffer
  */
 typedef struct parse_table
 {
 	char c;
 	int level;
-	void (*tf)();
-	void (*specf)();
+	void (*spec_func)();
 } parse_table;
 /* printf functions */
 void _copy(buffer *);
 int _printf(const char *format, ...);
 void _parse(buffer *b_r);
-void _create_tag(buffer *b_r, tags *t, parse_table *table);
+void _init_tag(tags *t);
+void _init_buffer(buffer *b_r, const char *format);
 void _spec_c(buffer *b_r, tags *t);
 void _spec_s(buffer *b_r, tags *t);
-void _spec_0(buffer *b_r, tags *t);
+void _spec_nil(buffer *b_r);
 void _spec_pct(buffer *b_r);
 void _spec_p(buffer *b_r, tags *t);
 void _spec_r(buffer *b_r, tags *t);
@@ -75,11 +72,14 @@ void _spec_u(buffer *b_r, tags *t);
 void _spec_x(buffer *b_r, tags *t);
 void _spec_X(buffer *b_r, tags *t);
 void _spec_b(buffer *b_r, tags *t);
-void _spec_i_d(buffer *b_r, tags *t);
+void _spec_d(buffer *b_r, tags *t);
 void _spec_R(buffer *b_r, tags *t);
-void _broken(void);
+void _error_(void);
 int __atoi(const char *s, int n);
+/* _write_to_buffer functions */
 void _write(buffer *b_r, char c);
+void _write_str(buffer *b_r, char *s);
+void _write_tmpbuf(buffer *b_r);
 void _parse_tag(buffer *b_r, tags *t, parse_table *table);
 int str_len(char *str);
 void _revstr(char *s);
