@@ -1,10 +1,10 @@
 #include "holberton.h"
 /**
-* _spec_i_d - sends va-arg with appropriat tags into buffer
+* _spec_d - sends va-arg with appropriat tags into buffer
 * @b_r: a pointer to the struct buffer
 * @t: a pointer to the struct tags
 */
-void _spec_i_d(buffer *b_r, tags *t)
+void _spec_d(buffer *b_r, tags *t)
 {
 	int ten_power, n_hold, minus, i;
 	char *num_str;

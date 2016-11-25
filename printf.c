@@ -1,9 +1,9 @@
 #include "holberton.h"
 /**
- * _printf - Recreate stdio's printf
- * @format: Formatted string to print to stdout
+ * _printf - Recreate stdio.h's printf
+ * @format: Formatted string to write to stdout
  *
- * Return: Number of chars printed
+ * Return: Number of chars written
  */
 int _printf(const char *format, ...)
 {
@@ -21,6 +21,7 @@ int _printf(const char *format, ...)
 			_parse(&b_r);
 	}
 
+	/* Write remaining buffer to stdout */
 	write(1, b_r.buf, b_r.bp);
 	b_r.printed += b_r.bp;
 
@@ -48,25 +49,23 @@ void _parse(buffer *b_r)
 	int i;
 	tags t;
 	parse_table table[] = {
-	{'d', 5, _found_spec, _spec_i_d}, {'i', 5, _found_spec, _spec_i_d},
-	{'c', 5, _found_spec, _spec_c}, {'s', 5, _found_spec, _spec_s},
-	{'u', 5, _found_spec, _spec_u}, {'o', 5, _found_spec, _spec_o},
-	{'x', 5, _found_spec, _spec_x}, {'X', 5, _found_spec, _spec_X},
-	{'b', 5, _found_spec, _spec_b}, {'S', 5, _found_spec, _spec_S},
-	{'p', 5, _found_spec, _spec_p}, {'R', 5, _found_spec, _spec_R},
-	{'r', 5, _found_spec, _spec_r}, {'%', 5, _found_spec, _spec_pct},
-	/* Default */ {'\0', 5, _broken, _spec_nil},
-	{'h', 4, _found_length, _broken}, {'l', 4, _found_length, _broken},
-	{'.', 3, _found_prec, _broken},
-	{'1', 2, _found_width, _broken}, {'2', 2, _found_width, _broken},
-	{'3', 2, _found_width, _broken}, {'4', 2, _found_width, _broken},
-	{'5', 2, _found_width, _broken}, {'6', 2, _found_width, _broken},
-	{'7', 2, _found_width, _broken}, {'8', 2, _found_width, _broken},
-	{'9', 2, _found_width, _broken}, {'-', 1, _found_flag, _broken},
-	{'+', 1, _found_flag, _broken}, {' ', 1, _found_flag, _broken},
-	{'#', 1, _found_flag, _broken}, {'0', 1, _found_flag, _broken},
-	/* We found nothing */ {'\0', -1, _broken, _broken}
+	{'d', 5, _spec_d}, {'i', 5, _spec_d}, {'c', 5, _spec_c},
+	{'s', 5, _spec_s}, {'u', 5, _spec_u}, {'o', 5, _spec_o},
+	{'x', 5, _spec_x}, {'X', 5, _spec_X}, {'b', 5, _spec_b},
+	{'S', 5, _spec_S}, {'p', 5, _spec_p}, {'R', 5, _spec_R},
+	{'r', 5, _spec_r}, {'%', 5, _spec_pct},
+	/* no specifier found */ {'\0', 5, _spec_nil},
+
+	{'h', 4, _error_}, {'l', 4, _error_},
+	{'.', 3, _error_},
+	{'1', 2, _error_}, {'2', 2, _error_}, {'3', 2, _error_},
+	{'4', 2, _error_}, {'5', 2, _error_}, {'6', 2, _error_},
+	{'7', 2, _error_}, {'8', 2, _error_}, {'9', 2, _error_},
+	{'-', 1, _error_}, {'+', 1, _error_}, {' ', 1, _error_},
+	{'#', 1, _error_}, {'0', 1, _error_},
+	/* End of Table */ {'\0', -1, _error_}
 	};
+
 	/* We only parse at %! */
 	if (b_r->format[b_r->fp] != '%')
 		write(1, "Error: Parsing when not at '%'\n", 31);
@@ -82,7 +81,7 @@ void _parse(buffer *b_r)
 	while (table[i].level == 5)
 	{
 		if (table[i].c == t.spec)
-			table[i].specf(b_r, &t);
+			table[i].spec_func(b_r, &t);
 		i++;
 	}
 }
@@ -102,10 +101,16 @@ void _parse_tag(buffer *b_r, tags *t, parse_table *table)
 		if (table[i].c == b_r->format[b_r->fp])
 		{
 			depth = table[i].level;
-			if (table[i].level == 2)
-				table[i].tf(b_r, t);
-			else
-				table[i].tf(b_r, t, table, i);
+			if (depth == 5)
+				_found_spec(b_r, t, table, i);
+			else if (depth == 4)
+				_found_length(b_r, t, table, i);
+			else if (depth == 3)
+				_found_prec(b_r, t, table, i);
+			else if (depth == 2)
+				_found_width(b_r, t);
+			else if (depth == 1)
+				_found_flag(b_r, t, table, i);
 			i = -1;
 		}
 		i++;
