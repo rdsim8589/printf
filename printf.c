@@ -22,7 +22,8 @@ int _printf(const char *format, ...)
 	}
 
 	/* Write remaining buffer to stdout */
-	write(1, b_r.buf, b_r.bp);
+	if (b_r.bp > 0)
+		write(1, b_r.buf, b_r.bp);
 	b_r.printed += b_r.bp;
 
 	va_end(b_r.ap);
