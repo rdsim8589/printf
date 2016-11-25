@@ -67,7 +67,6 @@ void _parse(buffer *b_r)
 	{'#', 1, _found_flag, _broken}, {'0', 1, _found_flag, _broken},
 	/* We found nothing */ {'\0', -1, _broken, _broken}
 	};
-
 	/* We only parse at %! */
 	if (b_r->format[b_r->fp] != '%')
 		write(1, "Error: Parsing when not at '%'\n", 31);
@@ -87,7 +86,6 @@ void _parse(buffer *b_r)
 		i++;
 	}
 }
-
 /**
  * _parse_tag - Build out the tags struct with tags found
  * @b_r: the buffer structure
@@ -96,14 +94,14 @@ void _parse(buffer *b_r)
  */
 void _parse_tag(buffer *b_r, tags *t, parse_table *table)
 {
-	int currentLevel, i, j;
+	int depth, i, j;
 
-	currentLevel = i = j = 0;
-	while (table[i].level >= currentLevel && currentLevel < 5)
+	depth = i = j = 0;
+	while (table[i].level > depth || table[i].level == 1)
 	{
 		if (table[i].c == b_r->format[b_r->fp])
 		{
-			currentLevel = table[i].level;
+			depth = table[i].level;
 			if (table[i].level == 2)
 				table[i].tf(b_r, t);
 			else
