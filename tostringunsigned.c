@@ -8,7 +8,7 @@
 char *_uint_to_str(unsigned long int n)
 {
 	char *s;
-	int i;
+	unsigned int i;
 
 	i = 0;
 	s = malloc(21 * sizeof(char));
@@ -35,7 +35,7 @@ char *_uint_to_str(unsigned long int n)
 char *_uint_to_hexstr(unsigned long int n)
 {
 	char *s;
-	int tmp, i;
+	unsigned int tmp, i;
 
 	i = 0;
 	s = malloc(21 * sizeof(char));
@@ -64,7 +64,7 @@ char *_uint_to_hexstr(unsigned long int n)
 char *_uint_to_caphexstr(unsigned long int n)
 {
 	char *s;
-	int tmp, i;
+	unsigned int tmp, i;
 
 	i = 0;
 	s = malloc(21 * sizeof(char));
@@ -93,7 +93,7 @@ char *_uint_to_caphexstr(unsigned long int n)
 char *_uint_to_octstr(unsigned long int n)
 {
 	char *s;
-	int tmp, i;
+	unsigned int tmp, i;
 
 	i = 0;
 	s = malloc(30 * sizeof(char));
@@ -120,7 +120,7 @@ char *_uint_to_octstr(unsigned long int n)
 char *_uint_to_binstr(unsigned long int n)
 {
 	char *s;
-	int tmp, i;
+	unsigned int tmp, i;
 
 	i = 0;
 	s = malloc(65 * sizeof(char));

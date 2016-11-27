@@ -46,15 +46,13 @@ typedef struct tags
  * struct parse_table - Table used for parsing the %s
  * @c: character found
  * @level: which level from 5 (specification) to 1 (flags)
- * @tf: function to match the tag found to build tags struct
- * @specf: function to put the matched specification into the buffer
+ * @spec_func: function to put the matched specification into the buffer
  */
 typedef struct parse_table
 {
 	char c;
 	int level;
-	void (*tf)();
-	void (*specf)();
+	void (*spec_func)();
 } parse_table;
 /* printf functions */
 void _copy(buffer *);
@@ -74,9 +72,9 @@ void _spec_u(buffer *b_r, tags *t);
 void _spec_x(buffer *b_r, tags *t);
 void _spec_X(buffer *b_r, tags *t);
 void _spec_b(buffer *b_r, tags *t);
-void _spec_i_d(buffer *b_r, tags *t);
+void _spec_d(buffer *b_r, tags *t);
 void _spec_R(buffer *b_r, tags *t);
-void _broken(void);
+void _error_(void);
 int __atoi(const char *s, int n);
 /* _write_to_buffer functions */
 void _write(buffer *b_r, char c);
