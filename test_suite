@@ -6,7 +6,7 @@
  * main - test suite for printf
  * run commands in bash
  *  $ gcc *c -o a.out; ./a.out > a
- *  $ gcc -DDEFINE'prinft=_printf' *c -o b.out; ./b.out > b
+ *  $ gcc -DDEFINE'printf =_printf' *c -o b.out; ./b.out > b
  *  $ hexdump -C a > a_hexdump; hexdump -C b > b_hexdump
  *  $ diff a_hexdump b_hexdump
  *
@@ -15,7 +15,7 @@
  * ---
  * > 00000a80  3a 20 30 78 37 66 66 65  30 37 36 63 33 37 30 30  |: 0x7ffe076c3700|
  *
- *  $ hexdump -s 0xa78 -C a | head -n3
+ *  $ hexdump -s 0xa70 -C a | head -n3
  *
  * example output:
  * 00000a70  72 65 73 73 20 77 69 74  68 20 77 69 64 74 68 29  |ress with width)|
