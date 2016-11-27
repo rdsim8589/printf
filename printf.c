@@ -86,6 +86,7 @@ void _parse(buffer *b_r)
 			table[i].specf(b_r, &t);
 		i++;
 	}
+	i = 0;
 }
 
 /**
