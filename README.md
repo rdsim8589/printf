@@ -60,31 +60,23 @@ format tags must follow the format of [flags][width][.precision][length]specifie
     </td>
   </tr>
   <tr>
-    <td>Google Groups</td>
     <td>
-      The <a href="https://groups.google.com/forum/#!forum/docker-dev"
-      target="_blank">docker-dev</a> group is for contributors and other people
-      contributing to the Docker project.  You can join this group without a
-      Google account by sending an email to <a
-      href="mailto:docker-dev+subscribe@googlegroups.com">docker-dev+subscribe@googlegroups.com</a>.
-      You'll receive a join-request message; simply reply to the message to
-      confirm your subscription.
+    +
     </td>
-  </tr>
-  <tr>
-    <td>Twitter</td>
     <td>
-      You can follow <a href="https://twitter.com/docker/" target="_blank">Docker's Twitter feed</a>
-      to get updates on our products. You can also tweet us questions or just
-      share blogs or stories.
+    d, i
     </td>
-  </tr>
-  <tr>
-    <td>Stack Overflow</td>
     <td>
-      Stack Overflow has over 7000 Docker questions listed. We regularly
-      monitor <a href="https://stackoverflow.com/search?tab=newest&q=docker" target="_blank">Docker questions</a>
-      and so do many other knowledgeable Docker users.
+    Forces proceed to with a sign even if positive</br>
+      <code>
+         _printf("A%dlast", 5);
+         _printf("A%+dlast", 5);
+      </code>
+    output
+      <code>
+        $ A5last
+        $ A+5last
+      </code>
     </td>
   </tr>
 </table>
