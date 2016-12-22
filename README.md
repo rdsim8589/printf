@@ -58,9 +58,9 @@ format tags must follow the format of [flags][width][.precision][length]specifie
   </tr>
   <tr>
     <td><b>
-	```
+	<code>
 	something
-	```
+	</code>
     </b></td>
   </tr>
   <tr>
