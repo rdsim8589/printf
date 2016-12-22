@@ -46,17 +46,19 @@ format tags must follow the format of [flags][width][.precision][length]specifie
     </td>
     <td>
 	Left justify</br>
-	<code>
-	_printf("A%3dlast", 5);
-	</code></br>
-	<code>
-	_printf("A%-3dlast", 5);
-	</code></br>
+	  <code>
+	    _printf("A%3dlast", 5);
+	  </code></br>
+	  <code>
+	    _printf("A%-3dlast", 5);
+	  </code></br>
 	output</br>
-	<code>
-	$ A  5last</br>
-	$ A5  last</br>
-	</code>
+	  <code>
+	    $ A  5last
+	  </code></br>
+          <code>
+            $ A5  last
+      	  </code></br>
     </td>
   </tr>
   <tr>
@@ -68,15 +70,11 @@ format tags must follow the format of [flags][width][.precision][length]specifie
     </td>
     <td>
     Forces proceed to with a sign even if positive</br>
-      <code>
-         _printf("A%dlast", 5);
-         _printf("A%+dlast", 5);
-      </code>
-    output
-      <code>
-        $ A5last
-        $ A+5last
-      </code>
+      <code>_printf("A%dlast", 5);</code></br>
+      <code>_printf("A%+dlast", 5);</code></br>
+    output</br>
+      <code>$ A5last</code></br>
+      <code>$ A+5last</code></br>
     </td>
   </tr>
 </table>
