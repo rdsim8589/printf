@@ -66,8 +66,8 @@ format tags must follow the format of [flags][width][.precision][length]specifie
     <td>
 	Left justify</br>
 	<code>
-	_printf("A%3dlast", 5);</br>
-	_printf("A%-3dlast", 5);</br>
+	_printf("A%3dlast", 5);
+	_printf("A%-3dlast", 5);
 	</code>
 	output</br>
 	<code>
