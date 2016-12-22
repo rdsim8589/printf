@@ -15,6 +15,7 @@ int _printf(const char *format, ...)
 
 ##Format tags
 format tags must follow the format of [flags][width][.precision][length]specifier
+
 | **specifier** | **output**                            |
 |---------------|---------------------------------------|
 | c             | characters                            |
