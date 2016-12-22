@@ -57,11 +57,24 @@ format tags must follow the format of [flags][width][.precision][length]specifie
     <td><b>Description and Examples</b> </td>
   </tr>
   <tr>
-    <td><b>
+    <td>
+    -
+    </td>
+    <td>
+    d, i, u, o, x, X, b, c, s
+    </td>
+    <td>
+	Left justify</br>
 	<code>
-	something
+	_printf("A%3dlast", 5);</br>
+	_printf("A%-3dlast", 5);</br>
 	</code>
-    </b></td>
+	output</br>
+	<code>
+	$ A  5last</br>
+	$ A5  last</br>
+	</code>
+    </td>
   </tr>
   <tr>
     <td>Google Groups</td>
