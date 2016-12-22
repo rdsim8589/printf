@@ -57,11 +57,11 @@ format tags must follow the format of [flags][width][.precision][length]specifie
     <td><b>Description and Examples</b> </td>
   </tr>
   <tr>
-    <td>Docker Community Forums</td>
-    <td>
-      The <a href="https://forums.docker.com/c/open-source-projects/de" target="_blank">Docker Engine</a>
-      group is for users of the Docker Engine project.
-    </td>
+    <td><b>
+	```
+	something
+	```
+    </b></td>
   </tr>
   <tr>
     <td>Google Groups</td>
