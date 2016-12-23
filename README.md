@@ -140,7 +140,8 @@ format tags must follow the format of [flags][width][.precision][length]specifie
 	output</br>
 	<code>$ A5last</code></br>
         <code>$ A005last</code></br>
-	For s − this is the maximum number of characters to be printed.
+	</br>
+	For s − this is the maximum number of characters to be printed.</br>
 	<code>_printf("A%s", "Holberton");</code></br>
 	<code>_printf("A%.3s", "Holberton");</code></br>
 	output</br>
