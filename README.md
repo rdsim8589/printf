@@ -98,7 +98,57 @@ format tags must follow the format of [flags][width][.precision][length]specifie
     </td>
   </tr>
 </table>
-##Completed Features
-###Delimiters
 
-#### digits `i, d`
+
+<table class="tg">
+  <col width="45%">
+  <col width="65%">
+  <tr>
+    <td><b>width</b></td>
+    <td><b>Effected Specifers</b></td>
+    <td><b>Description and Examples</b> </td>
+  </tr>
+  <tr>
+    <td>-</td>
+    <td>d, i, u, o, x, X, b, c, s</td>
+    <td>
+	minimum number to be printed</br>
+	<code>_printf("A%dlast", 5);</code></br>
+	<code>_printf("A%3dlast", 5);</code></br>
+	output</br>
+	<code>$ A5last</code></br>
+        <code>$ A  5last</code></br>
+    </td>
+  </tr>
+</table>
+
+<table class="tg">
+  <col width="45%">
+  <col width="65%">
+  <tr>
+    <td><b>.percision</b></td>
+    <td><b>Effected Specifers</b></td>
+    <td><b>Description and Examples</b> </td>
+  </tr>
+  <tr>
+    <td>-</td>
+    <td>d, i, u, o, x, X, s</td>
+    <td>
+	For integer specifiers (d, i, o, u, x, X) − precision specifies the minimum number of digits to be written. If the value to be written is shorter than this number, the result is padded with leading zeros.</br>
+	<code>_printf("A%dlast", 5);</code></br>
+	<code>_printf("A%.3dlast", 5);</code></br>
+	output</br>
+	<code>$ A5last</code></br>
+        <code>$ A005last</code></br>
+	For s − this is the maximum number of characters to be printed.
+	<code>_printf("A%s", "Holberton");</code></br>
+	<code>_printf("A%.3s", "Holberton");</code></br>
+	output</br>
+	<code>$ Holberton</code></br>
+        <code>$ Hol</code></br>
+    </td>
+  </tr>
+</table>
+##Future features
+format tags -, +, (space), #, and width for the pointer flag
+implement the length format tags
