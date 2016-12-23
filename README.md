@@ -10,7 +10,7 @@ compile everything within the directory and use _printf instead of printf
 ```
 $ gcc -Wall -Werror -Wextra -pedantic *.c
 ```
-##Declarition
+##Declaration
 int _printf(const char *format, ...)
 
 ##Completed Features
