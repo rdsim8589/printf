@@ -38,38 +38,22 @@ format tags must follow the format of [flags][width][.precision][length]specifie
     <td><b>Description and Examples</b> </td>
   </tr>
   <tr>
-    <td>
-    -
-    </td>
-    <td>
-    d, i, u, o, x, X, b, c, s
-    </td>
+    <td>-</td>
+    <td>d, i, u, o, x, X, b, c, s</td>
     <td>
 	Left justify</br>
-	  <code>
-	    _printf("A%3dlast", 5);
-	  </code></br>
-	  <code>
-	    _printf("A%-3dlast", 5);
-	  </code></br>
+	<code>_printf("A%3dlast", 5);</code></br>
+	<code>_printf("A%-3dlast", 5);</code></br>
 	output</br>
-	  <code>
-	    $ A  5last
-	  </code></br>
-          <code>
-            $ A5  last
-      	  </code></br>
+	<code>$ A  5last</code></br>
+        <code>$ A5  last</code></br>
     </td>
   </tr>
   <tr>
+    <td>+</td>
+    <td>d, i</td>
     <td>
-    +
-    </td>
-    <td>
-    d, i
-    </td>
-    <td>
-    Forces proceed to with a sign even if positive</br>
+      Forces proceed to with a sign even if positive</br>
       <code>_printf("A%dlast", 5);</code></br>
       <code>_printf("A%+dlast", 5);</code></br>
     output</br>
@@ -77,19 +61,43 @@ format tags must follow the format of [flags][width][.precision][length]specifie
       <code>$ A+5last</code></br>
     </td>
   </tr>
+  <tr>
+    <td>(space)</td>
+    <td>d, i</td>
+    <td>
+    if no sign is given, proceed with space
+      <code>_printf("A%dlast", 5);</code></br>
+      <code>_printf("A% dlast", 5);</code></br>
+    output
+      <code>$ A5last</code></br>
+      <code>$ A 5last</code></br>
+    </td>
+  </tr>
+  <tr>
+    <td>#</td>
+    <td>o, x, X </td>
+    <td>
+    Used with o, x or X specifiers the value is preceded with 0, 0x,or 0X respectively for values different than zero.
+      <code>_printf("%o, 1");</code></br>
+      <code>_printf("%#o, 1");</code></br>
+    output
+      <code>$1</code></br>
+      <code>$01</code></br>
+    </td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>d, i, u, o, x</td>
+    <td>
+     left pad with spaces with 0
+      <code>_printf("A%3dlast", 5);</code></br>
+      <code>_printf("A%03dlast", 5);</code></br>
+    output
+      <code>$ A  5last</code></br>
+      <code>$ A005last</code></br>
+    </td>
+  </tr>
 </table>
-
-| **flags** | **specifiers that it effects**        | **Description**                                                                                                                                                                       |
-|-----------|---------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| -         | d, i, u, o, x, X, b, c, s             | Left justify  ``` _printf("A%3dlast", 5); _printf("A%-3dlast", 5); ``` output ``` $ A  5last $ A5  last ```                                                                           |
-| +         | d, i                                  | Forces proceed to with a sign even if positive  ``` _printf("A%dlast", 5); _printf("A%+dlast", 5); ``` output ``` $ A5last $ A+5last ```                                              |
-| (space)   | d, i                                  | if no sign is given, proceed with space ``` _printf("A%dlast", 5); _printf("A% dlast", 5); ``` output ``` $ A5last $ A 5last ```                                                      |
-| #         | o, x, X                               | Used with o, x or X specifiers the value is preceded with  0, 0x,or 0X respectively for values different than zero. ``` _printf("%o, 1 ); _printf("%#o, 1); ``` output ``` $1 $01 ``` |
-| 0         | d, i, u, o, x                         | left pad with spaces with 0 ``` _printf("A%3dlast", 5); _printf("A%03dlast", 5); ``` output ``` $ A  5last $ A005last ```                                                             |
-| X         | unsigned hexadecimal int (Upper Case) |                                                                                                                                                                                       |
-| b         | Binary                                |                                                                                                                                                                                       |
-| p         | pointer address                       |                                                                                                                                                                                       |
-|           |                                       |                                                                                                                                                                                       |     
 ##Completed Features
 ###Delimiters
 
