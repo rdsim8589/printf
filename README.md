@@ -13,7 +13,9 @@ $ gcc -Wall -Werror -Wextra -pedantic *.c
 ##Declarition
 int _printf(const char *format, ...)
 
-##Format tags
+##Completed Features
+
+###Format tags
 format tags must follow the format of [flags][width][.precision][length]specifier
 
 | **specifier** | **output**                            |
