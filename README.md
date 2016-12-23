@@ -155,3 +155,11 @@ format tags must follow the format of [flags][width][.precision][length]specifie
 ##Future features
 format tags -, +, (space), #, and width for the pointer flag
 implement the length format tags
+
+##Contributors
+*Justin Marsh* - [Github](https://github.com/j-tyler) || [Twitter](https://twitter.com/dogonthecircuit) || [email](justin.marsh@holbertonschool.com)
+
+*Richard Sim* - [Github](https://github.com/rdsim8589) || [Twitter](https://twitter.com/richard_d_sim) || [email](richard.sim@holbertonschool.com)
+
+##Want to be contributor?
+reach out to any of the Contributors
